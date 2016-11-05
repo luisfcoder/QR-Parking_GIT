@@ -4,6 +4,10 @@ angular.module('starter.controllers', [])
 
 })
 
+.controller('RelatoriosCtrl', function($scope) {
+
+})
+
 
 .controller('AdministradoresCtrl', function($scope, Administradores) {
     $scope.busca = '';

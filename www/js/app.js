@@ -53,7 +53,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.administrado
       }
     }
   })
-  .state('tab.administradores', {
+    .state('tab.administradores', {
       url: '/administradores',
       cache: false,
       views: {
@@ -63,13 +63,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.administrado
         }
       }
     })
-  .state('tab.parametros', {
+    .state('tab.parametros', {
       url: '/parametros',
       cache: false,
       views: {
         'menuContent': {
           templateUrl: 'templates/tab-parametros.html',
           controller: 'ParametroCtrl'
+        }
+      }
+    })
+    .state('tab.relatorios', {
+      url: '/relatorios',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/tab-relatorios.html',
+          controller: 'RelatoriosCtrl'
         }
       }
     })
