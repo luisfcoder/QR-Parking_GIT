@@ -1,30 +1,24 @@
 angular.module('starter.administradorService', [])
 
 .factory('Administradores', function(Restangular, ApiEndpoint) {
-  // Might use a resource here that returns a JSON array
-  var administradores = Restangular.all('getAll').getList().$object;
+  var endpoint = "administrador/";
 
   return {
     all: function() {
-      administradores = Restangular.all('getAll').getList().$object;
-      return administradores;
+      return Restangular.all(endpoint + 'getAll').getList();
     },
 
     salvar: function(administrador){
-      administradores.post(administrador);
+      Restangular.all(endpoint).post(administrador);
     },
 
     remove: function(administrador) {
+      var administradores = {};
       administradores.splice(administradores.indexOf(administrador), 1);
     },
 
     get: function(administradorId) {
-      for (var i = 0; i < administradores.length; i++) {
-        if (administradores[i].id === parseInt(administradorId)) {
-          return administradores[i];
-        }
-      }
-      return null;
+      return Restangular.one(endpoint + 'getId', administradorId).get();
     }
   };
 });

@@ -39,15 +39,16 @@
         </label>
         <label class="item item-input">
             <span class="input-label">Senha</span>
-            <input type="password" name="senha" ng-model="senha" required
+            <input type="password" name="senha" ng-model="administradorForm.senha" required ng-minlength="6"
             placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : ''}}">
             <span class="obrigatorio" ng-show="form.senha.$dirty && form.senha.$invalid">
+              <span ng-show="form.$error.minlength">Informe no mínimo 6 caracteres.</span>
               <span ng-show="form.senha.$error.required">O campo senha é obrigatório.</span>
             </span>
         </label>
         <label class="item item-input">
             <span class="input-label">Confirmação da senha</span>
-            <input type="password" name="confirmacaoSenha" ng-model="confirmacaoSenha" ng-pattern="senha" required
+            <input type="password" name="confirmacaoSenha" ng-model="confirmacaoSenha" ng-pattern="administradorForm.senha" required
             placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : ''}}">
             <span class="obrigatorio" ng-show="form.confirmacaoSenha.$dirty && form.confirmacaoSenha.$invalid">
               <span ng-show="form.confirmacaoSenha.$error.required">O campo confirmação da senha é obrigatório.</span>

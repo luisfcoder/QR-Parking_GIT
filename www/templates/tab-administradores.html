@@ -11,17 +11,16 @@
     </ion-header-bar>
 <ion-content padding="true">
     <ion-list>
-        <ion-item class="item-remove-animate item-icon-right" ng-repeat="administrador in administradores | filter:busca | orderBy: orderList" type="item-text-wrap" href="#/tab/administradores/{{administrador.id}}">
+        <ion-item class="item-remove-animate item-icon-right" ng-repeat="administrador in administradores | filter:busca | orderBy: orderList" type="item-text-wrap" href="#/tab/administradores/{{administrador.id}}" ng-disabled="administrador.dtInativacao == null">
             <h2>{{administrador.nome}}</h2>
             <p>
                {{administrador.dtInativacao == null ? 'Cadastrado em ' : 'Inativo desde '}}
-               {{administrador.dtInativacao == null ? administrador.dtCadastro : administrador.dtInativacao}} 
+               {{administrador.dtInativacao == null ? (administrador.dtCadastro | date:'dd/MM/yyyy') : (administrador.dtInativacao | date:'dd/MM/yyyy')}}
             </p>
             <i class="icon ion-chevron-right icon-accessory"></i>
 
-            <ion-option-button class="button-stable" ng-click="remove(administrador)">
-                Inativar
-            </ion-option-button>
+            <ion-option-button ng-show="administrador.dtInativacao == null" class="button-stable" ng-click="ativarInativar(administrador)">Inativar</ion-option-button>
+            <ion-option-button ng-show="administrador.dtInativacao != null" class="button-stable" ng-click="ativarInativar(administrador)">Ativar</ion-option-button>
             <ion-option-button class="button-positive" ng-click="remove(administrador)">
                 Cartão de acesso
             </ion-option-button>
