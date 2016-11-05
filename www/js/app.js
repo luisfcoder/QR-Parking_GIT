@@ -52,7 +52,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.administrado
       }
     }
   })
-  .state('tab.administradores', {
+    .state('tab.administradores', {
       url: '/administradores',
       views: {
         'menuContent': {
@@ -61,12 +61,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.administrado
         }
       }
     })
-  .state('tab.parametros', {
+    .state('tab.parametros', {
       url: '/parametros',
       views: {
         'menuContent': {
           templateUrl: 'templates/tab-parametros.html',
           controller: 'ParametroCtrl'
+        }
+      }
+    })
+    .state('tab.relatorios', {
+      url: '/relatorios',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/tab-relatorios.html',
+          controller: 'RelatoriosCtrl'
         }
       }
     })
@@ -82,5 +91,37 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.administrado
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/inicio');
+
+});
+
+
+angular.module('ionicApp', ['ionic'])
+
+.controller('MyCtrl', function($scope) {
+  $scope.groups = [];
+  for (var i=0; i<10; i++) {
+    $scope.groups[i] = {
+      name: i,
+      items: []
+    };
+    for (var j=0; j<3; j++) {
+      $scope.groups[i].items.push(i + '-' + j);
+    }
+  }
+
+  /*
+   * if given group is the selected group, deselect it
+   * else, select the given group
+   */
+  $scope.toggleGroup = function(group) {
+    if ($scope.isGroupShown(group)) {
+      $scope.shownGroup = null;
+    } else {
+      $scope.shownGroup = group;
+    }
+  };
+  $scope.isGroupShown = function(group) {
+    return $scope.shownGroup === group;
+  };
 
 });
