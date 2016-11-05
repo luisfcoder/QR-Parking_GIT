@@ -7,20 +7,32 @@ angular.module('starter.controllers', [])
 
 .controller('AdministradoresCtrl', function($scope, Administradores) {
     $scope.busca = '';
-    $scope.administradores = Administradores.all();
+    Administradores.all().then(function(resposta){
+      $scope.administradores = resposta;
+    });
 
     $scope.limparBusca = function(){
         $scope.busca = '';
     }
 
-    $scope.remove = function(administrador) {
-      Administradores.remove(administrador);
+    $scope.ativarInativar = function(administrador) {
+      if(administrador.dtInativacao == null){
+        administrador.dtInativacao = new Date();
+      }else{
+        administrador.dtInativacao = null;
+      }
+      Administradores.salvar(administrador);
     };
 })
 
 .controller('AdministradorDetailCtrl', function($scope, $stateParams, Administradores, $location) {
-    $scope.administrador = Administradores.get($stateParams.administradorId);
-    $scope.administradorForm = angular.copy($scope.administrador);
+    $scope.administradorForm = {};
+    if($stateParams.administradorId != ""){
+      Administradores.get($stateParams.administradorId).then(function(resposta){
+        $scope.administrador = resposta;
+        $scope.administradorForm = angular.copy($scope.administrador);
+      });
+    }
 
     $scope.salvarAdministrador = function(){
       Administradores.salvar($scope.administradorForm);
