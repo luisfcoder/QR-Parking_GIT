@@ -4,7 +4,7 @@ angular.module('starter.administradorService', [])
   var endpoint = "administrador/";
 
   return {
-    all: function() {
+    buscar: function() {
       return Restangular.all(endpoint + 'getAll').getList();
     },
 

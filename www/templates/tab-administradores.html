@@ -1,4 +1,4 @@
-<ion-view view-title="Administradores">
+<ion-view view-title="Administradores" >
     <ion-nav-buttons side="right">
         <a menu-toggle="right" class="button button-icon icon ion-android-add" href="#/tab/administradores/"></a>
     </ion-nav-buttons>
@@ -11,7 +11,7 @@
     </ion-header-bar>
 <ion-content padding="true">
     <ion-list>
-        <ion-item class="item-remove-animate item-icon-right" ng-repeat="administrador in administradores | filter:busca | orderBy: orderList" type="item-text-wrap" href="#/tab/administradores/{{administrador.id}}" ng-disabled="administrador.dtInativacao == null">
+        <ion-item class="item-remove-animate item-icon-right" ng-repeat="administrador in administradores | filter:busca track by $index" type="item-text-wrap" href="#/tab/administradores/{{administrador.id}}">
             <h2>{{administrador.nome}}</h2>
             <p>
                {{administrador.dtInativacao == null ? 'Cadastrado em ' : 'Inativo desde '}}

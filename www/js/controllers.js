@@ -7,8 +7,13 @@ angular.module('starter.controllers', [])
 
 .controller('AdministradoresCtrl', function($scope, Administradores) {
     $scope.busca = '';
-    Administradores.all().then(function(resposta){
-      $scope.administradores = resposta;
+    $scope.administradores = {};
+
+    //Utilizado para forçar a atualização dos resultados após uma alteração
+    $scope.$on('$ionicView.enter', function() {
+      Administradores.buscar().then(function(resposta){
+        $scope.administradores = resposta;
+      });
     });
 
     $scope.limparBusca = function(){
@@ -25,7 +30,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('AdministradorDetailCtrl', function($scope, $stateParams, Administradores, $location) {
+.controller('AdministradorDetailCtrl', function($scope, $stateParams, Administradores, $location, $state) {
     $scope.administradorForm = {};
     if($stateParams.administradorId != ""){
       Administradores.get($stateParams.administradorId).then(function(resposta){
@@ -36,7 +41,8 @@ angular.module('starter.controllers', [])
 
     $scope.salvarAdministrador = function(){
       Administradores.salvar($scope.administradorForm);
-      $location.path("tab/administradores");
+      $state.go('tab.administradores');
+
   }
 })
 

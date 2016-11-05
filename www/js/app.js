@@ -45,6 +45,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.administrado
 
   .state('tab.inicio', {
     url: '/inicio',
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/tab-inicio.html',
@@ -54,6 +55,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.administrado
   })
   .state('tab.administradores', {
       url: '/administradores',
+      cache: false,
       views: {
         'menuContent': {
           templateUrl: 'templates/tab-administradores.html',
@@ -63,6 +65,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.administrado
     })
   .state('tab.parametros', {
       url: '/parametros',
+      cache: false,
       views: {
         'menuContent': {
           templateUrl: 'templates/tab-parametros.html',
@@ -72,6 +75,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.administrado
     })
     .state('tab.administrador-detail', {
       url: '/administradores/:administradorId',
+      cache: false,
       views: {
         'menuContent': {
           templateUrl: 'templates/administrador-detail.html',
