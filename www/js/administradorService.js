@@ -4,21 +4,16 @@ angular.module('starter.administradorService', [])
   var endpoint = "administrador/";
 
   return {
-    buscar: function() {
-      return Restangular.all(endpoint + 'getAll').getList();
+    buscarTodos: function() {
+      return Restangular.all(endpoint + 'buscarTodos').getList();
     },
 
     salvar: function(administrador){
-      Restangular.all(endpoint).post(administrador);
+      return Restangular.all(endpoint).post(administrador);
     },
 
-    remove: function(administrador) {
-      var administradores = {};
-      administradores.splice(administradores.indexOf(administrador), 1);
-    },
-
-    get: function(administradorId) {
-      return Restangular.one(endpoint + 'getId', administradorId).get();
+    buscarPorId: function(administradorId) {
+      return Restangular.one(endpoint + 'buscarPorId', administradorId).get();
     }
   };
 });

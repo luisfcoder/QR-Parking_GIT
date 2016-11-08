@@ -1,22 +1,17 @@
 angular.module('starter.parametroService', [])
 
-.factory('Parametro', function() {
+.factory('Parametro', function(Restangular) {
+  var endpoint = "parametro/";
 
-  var parametro = [{
-    id:0,
-    valorMinuto : '0.10',
-    tolerancia : 15,
-    justificativa : '',
-  }];
+  var ID_PARAMETRO = 1;
 
   return {
-    get: function(parametroId) {
-      for (var i = 0; i < parametro.length; i++) {
-        if (parametro[i].id === parseInt(parametroId)) {
-          return parametro[i];
-        }
-      }
-      return null;
+    salvar: function(parametro){
+      return Restangular.all(endpoint).post(parametro);
+    },
+
+    buscarPorId: function() {
+      return Restangular.one(endpoint + 'buscarPorId', ID_PARAMETRO).get();
     }
   };
 });
