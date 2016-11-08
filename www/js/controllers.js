@@ -34,7 +34,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('AdministradorDetailCtrl', function($scope, $ionicPopup, $stateParams, Administradores, $location, $state) {
+.controller('AdministradorDetailCtrl', function($scope, $ionicPopup, $stateParams, Administradores, $state) {
     $scope.administradorForm = {};
     if($stateParams.administradorId != ""){
       Administradores.buscarPorId($stateParams.administradorId).then(function(resposta){
@@ -67,4 +67,15 @@ angular.module('starter.controllers', [])
       $ionicPopup.alert({title: 'Erro!', template: 'Ocorreu um erro ao salvar.'});
     });
   }
+})
+
+.controller('GerarTicketCtrl', function($scope, $ionicSideMenuDelegate, $state, Ticket) {
+    $ionicSideMenuDelegate.canDragContent(false);
+    Ticket.gerar().then(function(ticketId){
+      var qrcode = new QRCode("qrcode").makeCode("ticketId=" + ticketId.id);
+    });
+})
+
+.controller('CalcularTicketCtrl', function($scope, $ionicPopup, $stateParams, $state) {
+
 });

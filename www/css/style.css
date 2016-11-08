@@ -23,3 +23,5 @@ body {
 .list .item.item-accordion.ng-hide-remove {
   display: block !important;
 }
+
+.qrCode{width:256px; margin:auto}

@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.administradorService', 'starter.parametroService', 'ui.utils.masks', 'ngCpfCnpj', 'restangular'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.administradorService', 'starter.parametroService', 'starter.ticketService', 'ui.utils.masks', 'ngCpfCnpj', 'restangular'])
 .constant('ApiEndpoint', {
   url: 'http://localhost:8080/'
 })
@@ -89,6 +89,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.administrado
         'menuContent': {
           templateUrl: 'templates/administrador-detail.html',
           controller: 'AdministradorDetailCtrl'
+        }
+      }
+    })
+    .state('tab.calcular-ticket', {
+      url: '/usuario/calcular-ticket/:ticketId',
+      cache: false,
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/usuario/calcular-ticket.html',
+          controller: 'CalcularTicketCtrl'
+        }
+      }
+    })
+    .state('tab.gerar-ticket', {
+      url: '/usuario/gerar-ticket',
+      cache: false,
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/usuario/gerar-ticket.html',
+          controller: 'GerarTicketCtrl'
         }
       }
     });
