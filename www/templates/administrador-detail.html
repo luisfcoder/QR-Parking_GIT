@@ -9,23 +9,23 @@
             <span class="input-label">Nome</span>
             <input type="text" name="nome" ng-model="administradorForm.nome" required>
             <span class="obrigatorio" ng-show="form.nome.$dirty && form.nome.$invalid">
-              <span ng-show="form.nome.$error.required">O campo nome é obrigatório.</span>
+              <span ng-show="form.nome.$error.required">Obrigatório.</span>
             </span>
         </label>
         <label class="item item-input">
             <span class="input-label">CPF</span>
             <input type="text" name="cpf" ng-model="administradorForm.cpf" ng-cpf ui-br-cpf-mask required>
             <span class="obrigatorio" ng-show="form.cpf.$dirty && form.cpf.$invalid">
-              <span ng-show="form.cpf.$error.required">O campo CPF é obrigatório.</span>
-              <span ng-show="!form.cpf.$error.required && !form.cpf.$valid">Insira um CPF válido.</span>
+              <span ng-show="form.cpf.$error.required">Obrigatório.</span>
+              <span ng-show="!form.cpf.$error.required && !form.cpf.$valid">CPF inválido.</span>
             </span>
         </label>
         <label class="item item-input">
             <span class="input-label">Email</span>
             <input type="email" name="email" ng-model="administradorForm.email" required>
             <span class="obrigatorio" ng-show="form.email.$dirty && form.email.$invalid">
-              <span ng-show="form.email.$error.required">O campo email é obrigatório.</span>
-              <span ng-show="form.email.$error.email">Insira um email válido.</span>
+              <span ng-show="form.email.$error.required">Obrigatório.</span>
+              <span ng-show="form.email.$error.email">Email inválido.</span>
             </span>
         </label>
         <label class="item item-input">
@@ -33,8 +33,8 @@
             <input type="email" name="confirmacaoEmail" ng-model="confirmacaoEmail" ng-pattern="administradorForm.email" required
             placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : ''}}">
             <span class="obrigatorio" ng-show="form.confirmacaoEmail.$dirty && form.confirmacaoEmail.$invalid">
-              <span ng-show="form.confirmacaoEmail.$error.required">O campo confirmação de email é obrigatório.</span>
-              <span ng-show="form.confirmacaoEmail.$error.pattern">Os emails são diferentes</span>
+              <span ng-show="form.confirmacaoEmail.$error.required">Obrigatório.</span>
+              <span ng-show="form.confirmacaoEmail.$error.pattern">Emails não conferem</span>
             </span>
         </label>
         <label class="item item-input">
@@ -42,8 +42,8 @@
             <input type="password" name="senha" ng-model="administradorForm.senha" required ng-minlength="6"
             placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : ''}}">
             <span class="obrigatorio" ng-show="form.senha.$dirty && form.senha.$invalid">
-              <span ng-show="form.$error.minlength">Informe no mínimo 6 caracteres.</span>
-              <span ng-show="form.senha.$error.required">O campo senha é obrigatório.</span>
+              <span ng-show="form.$error.minlength">Mínimo 6 caracteres.</span>
+              <span ng-show="form.senha.$error.required">Obrigatório.</span>
             </span>
         </label>
         <label class="item item-input">
@@ -51,8 +51,8 @@
             <input type="password" name="confirmacaoSenha" ng-model="confirmacaoSenha" ng-pattern="administradorForm.senha" required
             placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : ''}}">
             <span class="obrigatorio" ng-show="form.confirmacaoSenha.$dirty && form.confirmacaoSenha.$invalid">
-              <span ng-show="form.confirmacaoSenha.$error.required">O campo confirmação da senha é obrigatório.</span>
-              <span ng-show="form.confirmacaoSenha.$error.pattern">As senhas são diferentes</span>
+              <span ng-show="form.confirmacaoSenha.$error.required">Obrigatório.</span>
+              <span ng-show="form.confirmacaoSenha.$error.pattern">Senhas não conferem</span>
             </span>
         </label>
       </form>
