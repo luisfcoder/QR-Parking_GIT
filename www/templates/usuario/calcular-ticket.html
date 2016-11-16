@@ -1,11 +1,24 @@
-<ion-view view-title="Calcular ticket">
-  <ion-nav-buttons side="right">
-    <a menu-toggle="right" class="button button-icon icon ion-android-done" ng-click="salvarParametro()"></a>
-  </ion-nav-buttons>
+<ion-view view-title="Calcular ticket" hide-nav-bar="true">
+  <ion-content padding="true" class="usuario">
+    <div class="bar bar-header">
+      <div class="h1 title">Calcular ticket</div>
+    </div>
 
-  <ion-content padding="true">
-    <form name="form" novalidate>
+    <form name="form" novalidate class="margem-topo">
+      <center><h3 ng-show="valor == 0">Ticket na carência, saída liberada!</h3></center>
 
+      <div class="item total-pagar">
+        Total a pagar:
+        <span class="item-note">R$ {{valor | number:2}}</span>
+      </div>
+
+      <div class="item permanencia">
+        Tempo de permanência:
+        <span class="item-note">{{permanencia}} minutos</span>
+      </div>
+      <button ng-show="valor > 0" class="button button-block icon ion-card button-positive">
+        Pagar
+      </button>
     </form>
   </ion-content>
 </ion-view>

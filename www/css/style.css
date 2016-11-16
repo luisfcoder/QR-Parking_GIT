@@ -6,10 +6,8 @@
 body {
   cursor: url('http://ionicframework.com/img/finger.png'), auto;
 }
+.usuario{background:#f2f2f2!important}
 
-/*
-* http://docs.angularjs.org/api/ng/directive/ngShow#usage_animations
-*/
 .list .item.item-accordion {
   line-height: 38px;
   padding-top: 0;
@@ -25,3 +23,11 @@ body {
 }
 
 .qrCode{width:256px; margin:auto}
+
+.margem-topo{margin-top:48px;}
+
+.permanencia{color:#999; margin-top:15px!important;}
+
+.total-pagar, .total-pagar .item-note{color: #0F5501!important; font-weight:bold; font-size:18px;}
+
+h3{color:#3EAC3C!important}

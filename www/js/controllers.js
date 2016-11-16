@@ -88,6 +88,10 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('CalcularTicketCtrl', function($scope, $ionicPopup, $stateParams, $state) {
-
+.controller('CalcularTicketCtrl', function($scope, $ionicSideMenuDelegate, $ionicPopup, $stateParams, $state, Ticket) {
+  $ionicSideMenuDelegate.canDragContent(false);
+  Ticket.calcular($stateParams.ticketId).then(function(resposta){
+    $scope.valor = resposta.valor;
+    $scope.permanencia = resposta.permanencia;
+  });
 });

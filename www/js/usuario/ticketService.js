@@ -6,6 +6,10 @@ angular.module('starter.ticketService', [])
   return {
     gerar: function() {
       return Restangular.one(endpoint + 'gerar').get();
+    },
+
+    calcular: function(ticketId){
+      return Restangular.one(endpoint + 'calcular', ticketId).get();
     }
   };
 });
