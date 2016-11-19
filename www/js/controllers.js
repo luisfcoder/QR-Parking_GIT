@@ -94,4 +94,34 @@ angular.module('starter.controllers', [])
     $scope.valor = resposta.valor;
     $scope.permanencia = resposta.permanencia;
   });
+
+  $scope.card = {};
+
+  $ionicPopup.show({
+    template: '<ion-radio ng-model="cartaoSelecionado" ng-value="hahaha">Cartao 1</ion-radio>',
+    title: 'Selecione um cartão',
+    scope: $scope,
+    cssClass: "popup-cartao",
+    buttons: [
+      { text: 'Cancelar' },
+      {
+        text: 'Pagar',
+        type: 'button-positive',
+        onTap: function(e) {
+            return $scope.cartaoSelecionado;
+        }
+      },
+      {
+        text: '',
+        type: 'ion-plus-circled adicionar-cartao',
+        onTap: function(e) {
+          $state.go('tab.cadastrar-cartao');
+        }
+      }
+    ]
+  });
+})
+
+.controller('CadastrarCartaoCtrl', function($scope) {
+
 });

@@ -30,4 +30,9 @@ body {
 
 .total-pagar, .total-pagar .item-note{color: #0F5501!important; font-weight:bold; font-size:18px;}
 
-h3{color:#3EAC3C!important}
+.popup-cartao .popup-buttons
+{
+    float:left;
+}
+
+.adicionar-cartao{position:absolute; top:0; right:0; background: inherit!important;}
