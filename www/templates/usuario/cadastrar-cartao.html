@@ -1,0 +1,56 @@
+<ion-view view-title="Gerar Ticket" hide-nav-bar="true" >
+  <ion-content padding="true">
+  </h1>
+  <form name="ccForm">
+    <label class="item item-input">
+      <span class="input-label">Número do cartão</span>
+      <input type="text" class="form-control" id="cardNumber" cc-number cc-eager-type name="ccNumber" ng-model="card.number">
+      <span class="obrigatorio" ng-show="ccForm.ccNumber.$invalid">
+        <span ng-show="ccForm.ccNumber.$invalid">Invalido.</span>
+      </span>
+      <span>
+        {{ccForm.ccNumber.$ccType}}
+      </span>
+    </label>
+
+    <label class="item item-input">
+        <span class="input-label">Código de verificação</span>
+        <input type="number" maximo="3" class="form-control" id="cvc" cc-cvc cc-type="ccForm.ccNumber.$ccType" name="ccCvc" ng-model="card.cvc" required>
+        <span class="obrigatorio" ng-show="ccForm.ccCvc.$dirty && ccForm.ccCvc.$invalid">
+          <span ng-show="ccForm.ccCvc.$error.required">Obrigatório.</span>
+        </span>
+    </label>
+
+
+    <div class="form-group">
+      <label for="card-number">Expiration</label>
+      <div class="row" cc-exp>
+        <div class="col-xs-3">
+          <input placeholder="MM" type="text" class="form-control" cc-exp-month name="ccExpMonth" ng-model="card.expiration.month">
+        </div>
+        <div class="col-xs-3">
+          <input placeholder="YY" type="text" class="form-control" cc-exp-year name="ccExpYear" ng-model="card.expiration.year">
+        </div>
+      </div>
+    </div>
+    <table class="table">
+      <tr>
+        <th>Valid Month</th>
+        <th>Valid Year</th>
+        <th>Valid Pair</th>
+      </tr>
+      <tr>
+        <td>
+          {{ccForm.ccExpMonth.$valid | yesNo}}
+        </td>
+        <td>
+          {{ccForm.ccExpYear.$valid | yesNo}}
+        </td>
+        <td>
+          {{!ccForm.$error.ccExp | yesNo}}
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+</ion-view>

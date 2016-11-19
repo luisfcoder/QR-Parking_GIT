@@ -5,10 +5,26 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.administradorService', 'starter.parametroService', 'starter.ticketService', 'ui.utils.masks', 'ngCpfCnpj', 'restangular'])
+angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 'starter.administradorService', 'starter.parametroService', 'starter.cartaoService', 'starter.ticketService', 'ui.utils.masks', 'ngCpfCnpj', 'restangular', 'credit-cards'])
 .constant('ApiEndpoint', {
   url: 'http://localhost:8080/'
 })
+.filter('yesNo', function () {
+  return function (boolean) {
+    return boolean ? 'Yes' : 'No';
+  }
+})
+.directive("maximo", [function() {
+    return {
+        restrict: "A",
+        link: function(scope, elem, attrs) {
+            var limit = parseInt(attrs.limitTo);
+            angular.element(elem).on("keypress", function(e) {
+                if (this.value.length == limit) e.preventDefault();
+            });
+        }
+    }
+}])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -109,6 +125,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.administrado
         'menuContent': {
           templateUrl: 'templates/usuario/gerar-ticket.html',
           controller: 'GerarTicketCtrl'
+        }
+      }
+    })
+    .state('tab.cadastrar-cartao', {
+      url: '/usuario/cadastrar-cartao',
+      cache: false,
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/usuario/cadastrar-cartao.html',
+          controller: 'CadastrarCartaoCtrl'
         }
       }
     });
