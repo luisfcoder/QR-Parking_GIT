@@ -14,7 +14,7 @@
       </label>
       <label class="item item-input">
           <span class="input-label">Tolerância (em min):</span>
-          <input type="number" name="tolerancia" ng-model="parametro.tolerancia" maxlength="2" required>
+          <input type="number" name="tolerancia" ng-model="parametro.tolerancia" max="2" required>
           <span class="obrigatorio" ng-show="form.tolerancia.$dirty && form.tolerancia.$invalid">
             <span ng-show="form.tolerancia.$error.required">O campo Tolerância é obrigatório.</span>
           </span>
