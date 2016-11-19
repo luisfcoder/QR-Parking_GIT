@@ -7,14 +7,14 @@
     <form name="form" novalidate>
       <label class="item item-input">
           <span class="input-label">Valor do minuto:</span>
-          <input type="text" name="valorMinuto" ng-model="parametro.valorMinuto" ui-money-mask moeda="R$" required>
+          <input type="text" name="valorMinuto" ng-model="parametro.valorMinuto" ui-money-mask moeda="R$" maxlength="8" required>
           <span class="obrigatorio" ng-show="form.valorMinuto.$dirty && form.valorMinuto.$invalid">
             <span ng-show="form.valorMinuto.$error.required">O campo Valor do minuto é obrigatório.</span>
           </span>
       </label>
       <label class="item item-input">
           <span class="input-label">Tolerância (em min):</span>
-          <input type="text" name="tolerancia" ng-model="parametro.tolerancia" maxlength="2" required>
+          <input type="number" name="tolerancia" ng-model="parametro.tolerancia" max="2" required>
           <span class="obrigatorio" ng-show="form.tolerancia.$dirty && form.tolerancia.$invalid">
             <span ng-show="form.tolerancia.$error.required">O campo Tolerância é obrigatório.</span>
           </span>
@@ -22,7 +22,7 @@
       <label class="item item-input">
           <span class="input-label">Justificativa</span>
           <ion-textarea placeholder="Justificativa" class="textarea">
-            <textarea name="justificativa" placeholder="(Insira a justificativa)" autocomplete="off" autocorrect="off" ng-model="parametro.justificativa" required></textarea>
+            <textarea name="justificativa" maxlength="150" placeholder="(Insira a justificativa)" autocomplete="off" autocorrect="off" ng-model="parametro.justificativa" required></textarea>
           </ion-textarea>
           <span class="obrigatorio" ng-show="form.justificativa.$dirty && form.justificativa.$invalid">
             <span ng-show="form.justificativa.$error.required">O campo Justificativa é obrigatório.</span>
