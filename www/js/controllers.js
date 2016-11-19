@@ -56,11 +56,10 @@ angular.module('starter.controllers', [])
 
       Administradores.salvar($scope.administradorForm).then(function() {
         $ionicPopup.alert({title: 'Sucesso', template: 'Dados salvos com êxito.'});
-      }, function() {
-        $ionicPopup.alert({title: 'Erro', template: 'Ocorreu um erro ao salvar.'});
+        $state.go('tab.administradores');
+      }, function(resposta) {
+        $ionicPopup.alert({title: 'Erro', template: resposta.data.message});
       });
-
-      $state.go('tab.administradores');
 
     }
   }
