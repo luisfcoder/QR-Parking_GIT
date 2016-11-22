@@ -137,7 +137,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 's
           controller: 'CadastrarCartaoCtrl'
         }
       }
-    });
+    })
+  // PÁGINA SOBRE
+ .state('tab.sobre', {
+   url: '/sobre',
+   cache: false,
+   views: {
+     'menuContent': {
+       templateUrl: 'templates/tab-sobre.html',
+       controller: 'InicioCtrl'
+     }
+   }
+ });
+ //PÁGINA SOBRE
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/inicio');
