@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 'starter.administradorService', 'starter.parametroService', 'starter.cartaoService', 'starter.ticketService', 'ui.utils.masks', 'ngCpfCnpj', 'restangular', 'credit-cards'])
+angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 'starter.administradorService', 'starter.parametroService', 'starter.cartaoService', 'starter.ticketService', 'ui.utils.masks', 'ngCpfCnpj', 'restangular', 'credit-cards', 'LocalStorageModule'])
 .constant('ApiEndpoint', {
   url: 'http://localhost:8080/'
 })
@@ -41,8 +41,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 's
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, RestangularProvider) {
+.config(function($stateProvider, $urlRouterProvider, RestangularProvider, localStorageServiceProvider) {
   RestangularProvider.setBaseUrl('http://localhost:8080/');
+  localStorageServiceProvider.setPrefix('qrParking');
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -129,7 +130,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 's
       }
     })
     .state('tab.cadastrar-cartao', {
-      url: '/usuario/cadastrar-cartao',
+      url: '/usuario/cadastrar-cartao/:ticketId',
       cache: false,
       views: {
         'menuContent': {

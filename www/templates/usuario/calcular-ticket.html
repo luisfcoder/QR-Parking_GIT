@@ -16,7 +16,7 @@
         Tempo de permanência:
         <span class="item-note">{{permanencia}} minutos</span>
       </div>
-      <button ng-show="valor > 0" class="button button-block icon ion-card button-positive">
+      <button ng-show="valor > 0" ng-click="formaPagamento()" class="button button-block icon ion-card button-positive">
         Selecionar cartão
       </button>
     </form>

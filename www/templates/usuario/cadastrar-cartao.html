@@ -1,7 +1,14 @@
 <ion-view view-title="Gerar Ticket" hide-nav-bar="true" >
   <ion-content padding="true">
     <div class="bar bar-header">
+      <a class="button button-icon icon ion-chevron-left" ng-click="voltar();">Voltar</a>
       <div class="h1 title">Cadastrar cartão</div>
+      <a class="button button-icon icon ion-android-done"
+      ng-disabled="ccForm.ccNumber.$invalid
+      || !ccForm.ccNumber.$ccEagerType
+      || ccForm.ccCvc.$invalid
+      || (!ccForm.ccExpMonth.$valid
+      || !ccForm.ccExpYear.$valid)" ng-click="salvarCartao()"></a>
     </div>
 
     <form name="ccForm" class="margem-topo">
@@ -18,7 +25,7 @@
 
       <label class="item item-input">
         <span class="input-label">Código de verificação</span>
-        <input type="number" maximo="3" class="form-control" id="cvc" cc-cvc cc-type="ccForm.ccNumber.$ccType" name="ccCvc" ng-model="card.cvc" required>
+        <input type="text" maximo="3" ng-minlength="3" class="form-control" id="cvc" cc-cvc cc-type="ccForm.ccNumber.$ccType" name="ccCvc" ng-model="card.cvc" required>
         <span class="obrigatorio" ng-show="ccForm.ccCvc.$dirty && ccForm.ccCvc.$invalid">
           <span ng-show="ccForm.ccCvc.$error.required">Obrigatório.</span>
         </span>
@@ -29,10 +36,10 @@
           <span class="input-label">Data de validade:</span>
           <div class="row" cc-exp>
             <div class="col-xs-1">
-              <input placeholder="Mês" type="text" class="form-control" cc-exp-month name="ccExpMonth" ng-model="card.expiration.month">
+              <input placeholder="Mês" type="text" class="form-control" cc-exp-month name="ccExpMonth" ng-model="card.expiration.month" ng-minlength="2" required>
             </div>
             <div class="col-xs-1">
-              <input placeholder="Ano" type="text" class="form-control" cc-exp-year name="ccExpYear" ng-model="card.expiration.year">
+              <input placeholder="Ano" type="text" class="form-control" cc-exp-year name="ccExpYear" ng-model="card.expiration.year" ng-minlength="2" required>
             </div>
             <div class="col-xs-1">
               <span class="obrigatorio" ng-show="ccForm.$error.ccExp">

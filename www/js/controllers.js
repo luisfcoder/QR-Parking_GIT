@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('InicioCtrl', function($scope) {
+.controller('InicioCtrl', function($scope,localStorageService) {
 
 })
 
@@ -87,40 +87,129 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('CalcularTicketCtrl', function($scope, $ionicSideMenuDelegate, $ionicPopup, $stateParams, $state, Ticket) {
+.controller('CalcularTicketCtrl', function($scope, $ionicSideMenuDelegate, $ionicPopup, $stateParams, $state, Ticket, localStorageService) {
   $ionicSideMenuDelegate.canDragContent(false);
   Ticket.calcular($stateParams.ticketId).then(function(resposta){
     $scope.valor = resposta.valor;
     $scope.permanencia = resposta.permanencia;
   });
 
-  $scope.card = {};
+  $scope.cartaoSelecionado = {};
+  $scope.comprovante = {};
 
-  $ionicPopup.show({
-    template: '<ion-radio ng-model="cartaoSelecionado" ng-value="hahaha">Cartao 1</ion-radio>',
-    title: 'Selecione um cartão',
-    scope: $scope,
-    cssClass: "popup-cartao",
-    buttons: [
-      { text: 'Cancelar' },
-      {
-        text: 'Pagar',
-        type: 'button-positive',
-        onTap: function(e) {
-            return $scope.cartaoSelecionado;
+  $scope.formaPagamento = function(){
+    $ionicPopup.show({
+      template: buscarCartoes(),
+      title: 'Selecione um cartão',
+      scope: $scope,
+      cssClass: "popup-cartao",
+      buttons: [
+        { text: 'Cancelar' },
+        {
+          text: 'Pagar',
+          type: 'button-positive',
+          onTap: function(e) {
+            if ($scope.cartaoSelecionado.valor >= 0) {
+              processarPagamento();
+              return $scope.cartaoSelecionado;
+            } else {
+              e.preventDefault();
+            }
+          }
+        },
+        {
+          text: '',
+          type: 'ion-plus-circled adicionar-cartao',
+          onTap: function(e) {
+            $state.go('tab.cadastrar-cartao', {"ticketId":$stateParams.ticketId});
+          }
         }
-      },
-      {
-        text: '',
-        type: 'ion-plus-circled adicionar-cartao',
-        onTap: function(e) {
-          $state.go('tab.cadastrar-cartao');
+      ]
+    });
+  }
+
+  function processarPagamento(){
+    var myPopup = $ionicPopup.show({
+      template: '<input type="text" ng-model="comprovante.email">',
+      title: 'Envio de comprovante',
+      subTitle: 'Informe seu email',
+      scope: $scope,
+      buttons: [
+        { text: 'Cancelar' },
+        {
+          text: '<b>Enviar</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            if (!$scope.comprovante.email) {
+              e.preventDefault();
+            } else {
+              respostaEnvioEmail();
+              return;
+            }
+          }
         }
-      }
-    ]
-  });
+      ]
+    });
+  }
+
+  function respostaEnvioEmail(){
+    $ionicPopup.alert({
+      title: 'Email enviado com sucesso',
+      template: 'Comprovante enviado para seu email!'
+    });
+  }
+
+  function buscarCartoes(){
+    var cartoes = localStorageService.keys();
+    var template = '';
+    for (var i = 0; i < cartoes.length; i++){
+      var cartao = localStorageService.get(cartoes[i]);
+      var numberoAbreviado = cartao.number.substr(12, 4);
+      var bandeira = buscarBandeiraCartao(cartao.number);
+      template = template + '<ion-radio ng-model="cartaoSelecionado.valor" ng-value="'+i+'">'+bandeira + " Final " + numberoAbreviado +'</ion-radio>'
+    }
+    return template;
+  }
+
+  function buscarBandeiraCartao(cardNumber){
+
+    var regexVisa = /^4[0-9]{12}(?:[0-9]{3})?/;
+    var regexMaster = /^5[1-5][0-9]{14}/;
+    var regexAmex = /^3[47][0-9]{13}/;
+    var regexDiners = /^3(?:0[0-5]|[68][0-9])[0-9]{11}/;
+    var regexDiscover = /^6(?:011|5[0-9]{2})[0-9]{12}/;
+
+    if(regexVisa.test(cardNumber)){
+      return 'Visa';
+    }
+    if(regexMaster.test(cardNumber)){
+      return 'Mastercard';
+    }
+    if(regexAmex.test(cardNumber)){
+      return 'Amex';
+    }
+    if(regexDiners.test(cardNumber)){
+      return 'Diners';
+    }
+    if(regexDiscover.test(cardNumber)){
+      return 'Discover';
+    }
+    return '';
+  }
 })
 
-.controller('CadastrarCartaoCtrl', function($scope) {
+.controller('CadastrarCartaoCtrl', function($scope, $state, localStorageService, $stateParams) {
+  //limpa todos os cartões, usar somente me desenvolvimento
+  //localStorageService.clearAll();
+
+  $scope.card = {};
+  $scope.salvarCartao = function(){
+    localStorageService.set(new Date().getTime(), $scope.card);
+    $state.go('tab.calcular-ticket', {"ticketId":$stateParams.ticketId});
+  }
+
+  $scope.voltar = function(){
+    $state.go('tab.calcular-ticket', {"ticketId":$stateParams.ticketId});
+  }
 
 });
