@@ -4,10 +4,17 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('RelatoriosCtrl', function($scope) {
+.controller('RelatoriosCtrl', function($scope, NgTableParams, Relatorio) {
+  var lista = [];
+  Relatorio.buscarRelatorioFinanceiro().then(function(resposta){
+    $scope.tableParams = new NgTableParams({
+
+    }, {
+      dataset: resposta
+    });
+  })
 
 })
-
 
 .controller('AdministradoresCtrl', function($scope, Administradores) {
   $scope.busca = '';
@@ -53,7 +60,6 @@ angular.module('starter.controllers', [])
       $ionicPopup.alert({title: 'Erro!', template: 'Por favor, preencha todos os campos corretamente.'});
 
     }else{
-
       Administradores.salvar($scope.administradorForm).then(function() {
         $ionicPopup.alert({title: 'Sucesso', template: 'Dados salvos com êxito.'});
         $state.go('tab.administradores');
@@ -89,13 +95,16 @@ angular.module('starter.controllers', [])
 
 .controller('CalcularTicketCtrl', function($scope, $ionicSideMenuDelegate, $ionicPopup, $stateParams, $state, Ticket, localStorageService) {
   $ionicSideMenuDelegate.canDragContent(false);
+
+  $scope.dadosPagamento = {};
+  $scope.dadosPagamento.ticket = {};
+  $scope.dadosPagamento.ticket.id = $stateParams.ticketId;
+  $scope.comprovante = {};
+
   Ticket.calcular($stateParams.ticketId).then(function(resposta){
-    $scope.valor = resposta.valor;
+    $scope.dadosPagamento.valor = resposta.valor;
     $scope.permanencia = resposta.permanencia;
   });
-
-  $scope.cartaoSelecionado = {};
-  $scope.comprovante = {};
 
   $scope.formaPagamento = function(){
     $ionicPopup.show({
@@ -109,9 +118,9 @@ angular.module('starter.controllers', [])
           text: 'Pagar',
           type: 'button-positive',
           onTap: function(e) {
-            if ($scope.cartaoSelecionado.valor >= 0) {
+            if ($scope.dadosPagamento.cartao >= 0) {
               processarPagamento();
-              return $scope.cartaoSelecionado;
+              return;
             } else {
               e.preventDefault();
             }
@@ -129,10 +138,19 @@ angular.module('starter.controllers', [])
   }
 
   function processarPagamento(){
+    Ticket.processarPagamento($scope.dadosPagamento).then(function() {
+      $scope.pago = true;
+      respostaEnvioEmail();
+    }, function(resposta) {
+      $ionicPopup.alert({title: 'Erro!', template: resposta.data.message});
+    });
+  }
+
+  function respostaEnvioEmail(){
     var myPopup = $ionicPopup.show({
       template: '<input type="text" ng-model="comprovante.email">',
-      title: 'Envio de comprovante',
-      subTitle: 'Informe seu email',
+      title: 'Ticket pago!',
+      subTitle: 'Informe seu email para receber o comprovante',
       scope: $scope,
       buttons: [
         { text: 'Cancelar' },
@@ -143,19 +161,12 @@ angular.module('starter.controllers', [])
             if (!$scope.comprovante.email) {
               e.preventDefault();
             } else {
-              respostaEnvioEmail();
+              //Email.enviarEmail(titulo, assunto);
               return;
             }
           }
         }
       ]
-    });
-  }
-
-  function respostaEnvioEmail(){
-    $ionicPopup.alert({
-      title: 'Email enviado com sucesso',
-      template: 'Comprovante enviado para seu email!'
     });
   }
 
@@ -166,7 +177,7 @@ angular.module('starter.controllers', [])
       var cartao = localStorageService.get(cartoes[i]);
       var numberoAbreviado = cartao.number.substr(12, 4);
       var bandeira = buscarBandeiraCartao(cartao.number);
-      template = template + '<ion-radio ng-model="cartaoSelecionado.valor" ng-value="'+i+'">'+bandeira + " Final " + numberoAbreviado +'</ion-radio>'
+      template = template + '<ion-radio ng-model="dadosPagamento.cartao" ng-value="'+i+'">'+bandeira + " Final " + numberoAbreviado +'</ion-radio>'
     }
     return template;
   }

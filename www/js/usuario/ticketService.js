@@ -10,6 +10,10 @@ angular.module('starter.ticketService', [])
 
     calcular: function(ticketId){
       return Restangular.one(endpoint + 'calcular', ticketId).get();
+    },
+
+    processarPagamento: function(dadosPagamento){
+      return Restangular.all(endpoint + 'processarPagamento').post(dadosPagamento);
     }
   };
 });

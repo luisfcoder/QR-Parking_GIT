@@ -1,8 +1,15 @@
-<ion-view view-title="Relatórios">
+<ion-view view-title="Relatório Financeiro">
     <ion-header-bar class="bar-light bar-subheader">
 
     </ion-header-bar>
     <ion-content padding="true">
-
+      <table ng-table="tableParams" class="table" show-filter="false">
+          <tr ng-repeat="dados in $data">
+              <td title="'Ticket'" sortable="'id'" align="center">{{dados.ticket.id}}</td>
+              <td title="'Data de pagamento'" sortable="'dtPagamento'" align="center">{{dados.dtPagamento | date:'dd/MM/yyyy'}}</td>
+              <td title="'Valor'" sortable="'valorPago'" align="center">R$ {{dados.valorPago | number:2}}</td>
+          </tr>
+      </table>
+      <b>Total:</b> 13.398,00
     </ion-content>
 </ion-view>
