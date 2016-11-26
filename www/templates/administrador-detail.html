@@ -8,7 +8,6 @@
         <label class="item item-input">
             <span class="input-label">Nome</span>
             <input type="text" name="nome" ng-model="administradorForm.nome" required>
-
         </label>
         <label>
         <span class="obrigatorio" ng-show="form.nome.$dirty && form.nome.$invalid">
@@ -23,6 +22,7 @@
               <span ng-show="!form.cpf.$error.required && !form.cpf.$valid">CPF inválido.</span>
             </span>
         </label>
+
         <label class="item item-input">
             <span class="input-label">Email</span>
             <input type="email" name="email" ng-model="administradorForm.email" required>
