@@ -2,62 +2,101 @@
     <ion-nav-buttons side="right">
         <a menu-toggle="right" class="button button-icon icon ion-android-done" ng-click="salvarAdministrador()"></a>
     </ion-nav-buttons>
-
     <ion-content padding="true">
       <form name="form" novalidate>
         <label class="item item-input">
             <span class="input-label">Nome</span>
             <input type="text" name="nome" ng-model="administradorForm.nome" required>
         </label>
+<div class="col text-center">
+        <p>
         <label>
         <span class="obrigatorio" ng-show="form.nome.$dirty && form.nome.$invalid">
           <span ng-show="form.nome.$error.required">Obrigatório.</span>
         </span>
       </label>
+    </p>
+  </div>
         <label class="item item-input">
             <span class="input-label">CPF</span>
             <input type="text" name="cpf" ng-model="administradorForm.cpf" ng-cpf ui-br-cpf-mask required>
+            </label>
+            <div class="col text-center">
+              <p>
+                <label>
             <span class="obrigatorio" ng-show="form.cpf.$dirty && form.cpf.$invalid">
               <span ng-show="form.cpf.$error.required">Obrigatório.</span>
               <span ng-show="!form.cpf.$error.required && !form.cpf.$valid">CPF inválido.</span>
             </span>
-        </label>
+          </label>
+          </p>
+        </div>
+
 
         <label class="item item-input">
             <span class="input-label">Email</span>
             <input type="email" name="email" ng-model="administradorForm.email" required>
+            </label>
+            <div class="col text-center">
+              <p>
+                <label>
             <span class="obrigatorio" ng-show="form.email.$dirty && form.email.$invalid">
               <span ng-show="form.email.$error.required">Obrigatório.</span>
               <span ng-show="form.email.$error.email">Email inválido.</span>
             </span>
-        </label>
+            <label>
+            </p>
+          </div>
+
         <label class="item item-input">
             <span class="input-label"></span>
             <input type="email" name="confirmacaoEmail" ng-model="administradorFormConf.email" ng-pattern="administradorForm.email" required
             placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : 'Confirmar email'}}">
+  </label>
+    <div class="col text-center">
+      <p>
+        <label>
             <span class="obrigatorio" ng-show="form.confirmacaoEmail.$dirty && form.confirmacaoEmail.$invalid">
               <span ng-show="form.confirmacaoEmail.$error.required">Obrigatório.</span>
               <span ng-show="form.confirmacaoEmail.$error.pattern">Emails não conferem</span>
             </span>
-        </label>
+          </label>
+        </p>
+      </div>
+
         <label class="item item-input">
             <span class="input-label">Senha</span>
             <input type="password" name="senha" ng-model="administradorForm.senha" required ng-minlength="6"
             placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : ''}}">
+  </label>
+  <div class="col text-center">
+    <p>
+      <label>
             <span class="obrigatorio" ng-show="form.senha.$dirty && form.senha.$invalid">
               <span ng-show="form.$error.minlength">Mínimo 6 caracteres.</span>
               <span ng-show="form.senha.$error.required">Obrigatório.</span>
             </span>
-        </label>
+          </label>
+        </p>
+      </div>
+
         <label class="item item-input">
             <span class="input-label"></span>
             <input type="password" name="confirmacaoSenha" ng-model="confirmacaoSenha" ng-pattern="administradorForm.senha" required
             placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : 'Confirmar senha'}}">
+  </label>
+  <div class="col text-center">
+    <p>
+      <label>
+
             <span class="obrigatorio" ng-show="form.confirmacaoSenha.$dirty && form.confirmacaoSenha.$invalid">
               <span ng-show="form.confirmacaoSenha.$error.required">Obrigatório.</span>
               <span ng-show="form.confirmacaoSenha.$error.pattern">Senhas não conferem</span>
             </span>
-        </label>
+          </label>
+        </p>
+      </div>
+
       </form>
     </ion-content>
 </ion-view>
