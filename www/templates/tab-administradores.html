@@ -3,7 +3,7 @@
         <a menu-toggle="right" class="button button-icon icon ion-android-add" href="#/tab/administradores/"></a>
     </ion-nav-buttons>
     <ion-header-bar class="bar-light bar-subheader">
-        <input type="search" placeholder="Buscar (nome, cpf e etc...)" ng-model="busca" style="width:100%">
+        <input type="search" placeholder="Buscar (Nome, CPF ou email)" ng-model="busca" style="width:100%">
         <button ng-if="busca.length"
         class="button button-icon ion-android-close input-button"
         ng-click="limparBusca()">
@@ -11,7 +11,7 @@
     </ion-header-bar>
 <ion-content padding="true">
     <ion-list>
-        <ion-item class="item-remove-animate item-icon-right" ng-repeat="administrador in administradores | filter:busca track by $index" type="item-text-wrap" href="#/tab/administradores/{{administrador.id}}">
+        <ion-item class="item-remove-animate item-icon-right" ng-repeat="administrador in filtrados = (administradores | filter:busca)" type="item-text-wrap" href="#/tab/administradores/{{administrador.id}}">
             <h2>{{administrador.nome}}</h2>
             <p>
                {{administrador.dtInativacao == null ? 'Cadastrado em ' : 'Inativo desde '}}
@@ -22,6 +22,15 @@
             <ion-option-button ng-show="administrador.dtInativacao == null" class="button-assertive" ng-click="ativarInativar(administrador)">Inativar</ion-option-button>
             <ion-option-button ng-show="administrador.dtInativacao != null" class="button-balanced" ng-click="ativarInativar(administrador)">Ativar</ion-option-button>
         </ion-item>
+        <div ></div>
+
+        <div class="col text-center" ng-show="filtrados.length == 0">
+          <label>
+            <span>Nenhum resultado encontrado.</span>
+          </label>
+        </div>
+
+
     </ion-list>
 </ion-content>
 </ion-view>

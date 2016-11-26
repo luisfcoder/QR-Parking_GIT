@@ -58,7 +58,7 @@ angular.module('starter.controllers', [])
     //NÃO VALIDA OS FORMS DE CONFIRMAÇÃO
     if($scope.administradorForm.nome == undefined || $scope.administradorForm.cpf == undefined || $scope.administradorForm.email == undefined || $scope.administradorForm.senha == undefined){
 
-      $ionicPopup.alert({title: 'Erro!', template: 'Por favor, preencha todos os campos corretamente.'});
+      $ionicPopup.alert({title: 'Erro', template: 'Por favor, preencha todos os campos corretamente.'});
 
     }else{
       Administradores.salvar($scope.administradorForm).then(function() {
@@ -143,7 +143,7 @@ angular.module('starter.controllers', [])
       $scope.pago = true;
       respostaEnvioEmail();
     }, function(resposta) {
-      $ionicPopup.alert({title: 'Erro!', template: resposta.data.message});
+      $ionicPopup.alert({title: 'Erro', template: resposta.data.message});
     });
   }
 
