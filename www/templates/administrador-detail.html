@@ -8,10 +8,13 @@
         <label class="item item-input">
             <span class="input-label">Nome</span>
             <input type="text" name="nome" ng-model="administradorForm.nome" required>
-            <span class="obrigatorio" ng-show="form.nome.$dirty && form.nome.$invalid">
-              <span ng-show="form.nome.$error.required">Obrigatório.</span>
-            </span>
+
         </label>
+        <label>
+        <span class="obrigatorio" ng-show="form.nome.$dirty && form.nome.$invalid">
+          <span ng-show="form.nome.$error.required">Obrigatório.</span>
+        </span>
+      </label>
         <label class="item item-input">
             <span class="input-label">CPF</span>
             <input type="text" name="cpf" ng-model="administradorForm.cpf" ng-cpf ui-br-cpf-mask required>
@@ -29,9 +32,9 @@
             </span>
         </label>
         <label class="item item-input">
-            <span class="input-label">Confirmar email</span>
-            <input type="email" name="confirmacaoEmail" ng-model="confirmacaoEmail" ng-pattern="administradorForm.email" required
-            placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : ''}}">
+            <span class="input-label"></span>
+            <input type="email" name="confirmacaoEmail" ng-model="administradorFormConf.email" ng-pattern="administradorForm.email" required
+            placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : 'Confirmar email'}}">
             <span class="obrigatorio" ng-show="form.confirmacaoEmail.$dirty && form.confirmacaoEmail.$invalid">
               <span ng-show="form.confirmacaoEmail.$error.required">Obrigatório.</span>
               <span ng-show="form.confirmacaoEmail.$error.pattern">Emails não conferem</span>
@@ -47,9 +50,9 @@
             </span>
         </label>
         <label class="item item-input">
-            <span class="input-label">Confirmação da senha</span>
+            <span class="input-label"></span>
             <input type="password" name="confirmacaoSenha" ng-model="confirmacaoSenha" ng-pattern="administradorForm.senha" required
-            placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : ''}}">
+            placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : 'Confirmar senha'}}">
             <span class="obrigatorio" ng-show="form.confirmacaoSenha.$dirty && form.confirmacaoSenha.$invalid">
               <span ng-show="form.confirmacaoSenha.$error.required">Obrigatório.</span>
               <span ng-show="form.confirmacaoSenha.$error.pattern">Senhas não conferem</span>

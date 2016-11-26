@@ -47,6 +47,7 @@ angular.module('starter.controllers', [])
     Administradores.buscarPorId($stateParams.administradorId).then(function(resposta){
       $scope.administrador = resposta;
       $scope.administradorForm = angular.copy($scope.administrador);
+      $scope.administradorFormConf = angular.copy($scope.administrador);
     });
   }
 
