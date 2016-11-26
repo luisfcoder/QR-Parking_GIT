@@ -5,7 +5,7 @@
     </div>
 
     <form name="form" novalidate class="margem-topo">
-      <center><h4 ng-show="dadosPagamento.valor == 0">Ticket na carência, saída liberada!</h4></center>
+      <center><h4 ng-show="dadosPagamento.valor == 0">Ticket dentro da tolerância, saída liberada!</h4></center>
       <center><h4 ng-show="pago">Saída liberada!</h4></center>
 
       <div ng-show="dadosPagamento.valor > 0 && !pago">
