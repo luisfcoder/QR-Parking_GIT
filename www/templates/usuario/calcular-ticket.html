@@ -5,20 +5,23 @@
     </div>
 
     <form name="form" novalidate class="margem-topo">
-      <center><h3 ng-show="valor == 0">Ticket na carência, saída liberada!</h3></center>
+      <center><h4 ng-show="dadosPagamento.valor == 0">Ticket na carência, saída liberada!</h4></center>
+      <center><h4 ng-show="pago">Saída liberada!</h4></center>
 
-      <div class="item total-pagar">
-        Total a pagar:
-        <span class="item-note">R$ {{valor | number:2}}</span>
-      </div>
+      <div ng-show="dadosPagamento.valor > 0 && !pago">
+        <div class="item total-pagar">
+          Total a pagar:
+          <span class="item-note">R$ {{dadosPagamento.valor | number:2}}</span>
+        </div>
 
-      <div class="item permanencia">
-        Tempo de permanência:
-        <span class="item-note">{{permanencia}} minutos</span>
+        <div class="item permanencia">
+          Tempo de permanência:
+          <span class="item-note">{{permanencia}} minutos</span>
+        </div>
+        <button ng-click="formaPagamento()" class="button button-block icon ion-card button-positive">
+          Selecionar cartão
+        </button>
       </div>
-      <button ng-show="valor > 0" ng-click="formaPagamento()" class="button button-block icon ion-card button-positive">
-        Selecionar cartão
-      </button>
     </form>
   </ion-content>
 </ion-view>
