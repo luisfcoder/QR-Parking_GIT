@@ -4,15 +4,60 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('RelatoriosCtrl', function($scope, NgTableParams, Relatorio) {
-  var lista = [];
-  Relatorio.buscarRelatorioFinanceiro().then(function(resposta){
-    $scope.tableParams = new NgTableParams({
+.controller('RelatoriosCtrl', function($scope, NgTableParams, Relatorio, ionicDatePicker, datetime) {
+  function init(){
+    $scope.periodo = {};
+    $scope.periodo.dataInicial = "0";
+    $scope.periodo.dataFinal = "0";
 
-    }, {
-      dataset: resposta
+    var lista = [];
+    Relatorio.buscarRelatorioFinanceiro().then(function(resposta){
+      $scope.total = calcularTotal(resposta);
+      $scope.tableParams = new NgTableParams({}, {
+        dataset: resposta
+      });
     });
-  })
+  }
+
+  var inicial = {
+    callback: function (val) {  //Mandatory
+      $scope.periodo.dataInicial = new Date(val);
+    }
+  };
+
+  var final = {
+    callback: function (val) {  //Mandatory
+      $scope.periodo.dataFinal = new Date(val);
+    }
+  };
+
+  $scope.calendarioInicial = function(){
+    ionicDatePicker.openDatePicker(inicial);
+  };
+
+  $scope.calendarioFinal = function(){
+    ionicDatePicker.openDatePicker(final);
+  };
+
+  $scope.buscarPorPeriodo = function(){
+    var lista = [];
+    Relatorio.buscarRelatorioFinanceiroPorPeriodo($scope.periodo).then(function(resposta){
+      $scope.total = calcularTotal(resposta);
+      $scope.tableParams = new NgTableParams({}, {
+        dataset: resposta
+      });
+    });
+  }
+
+  function calcularTotal(resposta){
+    var soma = 0;
+    for(var i = 0; i<resposta.length; i++){
+      soma += resposta[i].valorPago;
+    }
+    return soma;
+  }
+
+  init();
 
 })
 
@@ -74,13 +119,19 @@ angular.module('starter.controllers', [])
 
 .controller("ParametroCtrl", function($scope, $ionicPopup, Parametro){
 
-  Parametro.buscarPorId().then(function(resposta){
+  Parametro.buscarAtual().then(function(resposta){
     $scope.parametro = resposta;
   });
 
   $scope.salvarParametro = function(){
+
+    if($scope.parametro.tolerancia == undefined || $scope.parametro.justificativa == undefined){
+      $ionicPopup.alert({title: 'Erro!', template: 'Por favor, preencha todos os campos corretamente.'});
+    return;
+    }
+
     Parametro.salvar($scope.parametro).then(function() {
-      $ionicPopup.alert({title: 'Sucesso', template: 'Dados atualizados com êxito.'});
+      $ionicPopup.alert({title: 'Sucesso', template: 'Parâmetros atualizados com êxito.'});
     }, function() {
       $ionicPopup.alert({title: 'Erro', template: 'Ocorreu um erro ao salvar.'});
     });
@@ -94,7 +145,7 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('CalcularTicketCtrl', function($scope, $ionicSideMenuDelegate, $ionicPopup, $stateParams, $state, Ticket, localStorageService) {
+.controller('CalcularTicketCtrl', function($scope, $ionicSideMenuDelegate, $ionicPopup, $stateParams, $state, Ticket, localStorageService, Cartao) {
   $ionicSideMenuDelegate.canDragContent(false);
 
   $scope.dadosPagamento = {};
@@ -177,36 +228,10 @@ angular.module('starter.controllers', [])
     for (var i = 0; i < cartoes.length; i++){
       var cartao = localStorageService.get(cartoes[i]);
       var numberoAbreviado = cartao.number.substr(12, 4);
-      var bandeira = buscarBandeiraCartao(cartao.number);
+      var bandeira = Cartao.buscarBandeiraCartao(cartao.number);
       template = template + '<ion-radio ng-model="dadosPagamento.cartao" ng-value="'+i+'">'+bandeira + " Final " + numberoAbreviado +'</ion-radio>'
     }
     return template;
-  }
-
-  function buscarBandeiraCartao(cardNumber){
-
-    var regexVisa = /^4[0-9]{12}(?:[0-9]{3})?/;
-    var regexMaster = /^5[1-5][0-9]{14}/;
-    var regexAmex = /^3[47][0-9]{13}/;
-    var regexDiners = /^3(?:0[0-5]|[68][0-9])[0-9]{11}/;
-    var regexDiscover = /^6(?:011|5[0-9]{2})[0-9]{12}/;
-
-    if(regexVisa.test(cardNumber)){
-      return 'Visa';
-    }
-    if(regexMaster.test(cardNumber)){
-      return 'Mastercard';
-    }
-    if(regexAmex.test(cardNumber)){
-      return 'Amex';
-    }
-    if(regexDiners.test(cardNumber)){
-      return 'Diners';
-    }
-    if(regexDiscover.test(cardNumber)){
-      return 'Discover';
-    }
-    return '';
   }
 })
 
