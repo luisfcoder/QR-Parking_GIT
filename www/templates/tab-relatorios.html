@@ -1,16 +1,22 @@
 <link href="lib/ng-table/src/bootstrap.min.css" rel="stylesheet">
 <ion-view view-title="Relatório Financeiro">
-    <ion-header-bar class="bar-light bar-subheader">
+  <ion-header-bar class="bar-light bar-subheader">
 
-    </ion-header-bar>
-    <ion-content padding="true">
-      <table ng-table="tableParams" class="table" show-filter="false">
-          <tr ng-repeat="dados in $data">
-              <td title="'Ticket'" sortable="'id'" align="center">{{dados.ticket.id}}</td>
-              <td title="'Data de pagamento'" sortable="'dtPagamento'" align="center">{{dados.dtPagamento | date:'dd/MM/yyyy'}}</td>
-              <td title="'Valor'" sortable="'valorPago'" align="center">R$ {{dados.valorPago | number:2}}</td>
-          </tr>
-      </table>
-      <b>Total:</b> 13.398,00
-    </ion-content>
+  </ion-header-bar>
+  <ion-content padding="true">
+
+              <input type="text" placeholder="Data inicial" ng-model="periodo.dataInicial" datetime="dd/MM/yyyy" ng-click="calendarioInicial()">
+              <input type="text" placeholder="Data inicial" ng-model="periodo.dataFinal" datetime="dd/MM/yyyy" ng-click="calendarioFinal()">
+              <button ng-click="" class="button button-block icon ion-search button-positive"></button>
+
+
+    <table ng-table="tableParams" class="table" show-filter="false">
+      <tr ng-repeat="dados in $data">
+        <td title="'Ticket'" sortable="'id'" align="center">{{dados.ticket.id}}</td>
+        <td title="'Data de pagamento'" sortable="'dtPagamento'" align="center">{{dados.dtPagamento | date:'dd/MM/yyyy'}}</td>
+        <td title="'Valor'" sortable="'valorPago'" align="center">R$ {{dados.valorPago | number:2}}</td>
+      </tr>
+    </table>
+    <b>Total:</b> R$ {{total | number:2}}
+  </ion-content>
 </ion-view>

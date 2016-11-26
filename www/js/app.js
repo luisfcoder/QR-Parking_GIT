@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 'starter.administradorService', 'starter.parametroService', 'starter.cartaoService', 'starter.ticketService', 'starter.relatorioService', 'ui.utils.masks', 'ngCpfCnpj', 'restangular', 'credit-cards', 'LocalStorageModule', 'ngTable'])
+angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 'starter.administradorService', 'starter.parametroService', 'starter.cartaoService', 'starter.ticketService', 'starter.relatorioService', 'ui.utils.masks', 'ngCpfCnpj', 'restangular', 'credit-cards', 'LocalStorageModule', 'ngTable', 'ionic-datepicker', 'datetime'])
 .constant('ApiEndpoint', {
   url: 'http://localhost:8080/'
 })
@@ -41,9 +41,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 's
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, RestangularProvider, localStorageServiceProvider) {
+.config(function($stateProvider, $urlRouterProvider, RestangularProvider, localStorageServiceProvider, ionicDatePickerProvider) {
   RestangularProvider.setBaseUrl('http://localhost:8080/');
   localStorageServiceProvider.setPrefix('qrParking');
+  var datePickerObj = {
+      inputDate: new Date(),
+      titleLabel: 'Selecione uma data',
+      todayLabel: 'Hoje',
+      closeLabel: 'Fechar',
+      mondayFirst: false,
+      weeksList: ["D", "S", "T", "Q", "Q", "S", "S"],
+      monthsList: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+      templateType: 'popup',
+      from: new Date(2016, 8, 1),
+      to: new Date(2025, 8, 1),
+      showTodayButton: false,
+      dateFormat: 'dd/MM/yyyy',
+      closeOnSelect: true,
+      disableWeekdays: []
+    };
+    ionicDatePickerProvider.configDatePicker(datePickerObj);
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
