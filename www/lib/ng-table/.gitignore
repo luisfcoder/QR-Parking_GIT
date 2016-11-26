@@ -6,7 +6,6 @@ npm-debug.*
 index.js
 index.d.ts
 index.js.map
-src/**/*.js
 src/**/*.js.map
 src/**/*.d.ts
 e2e/**/*.js
