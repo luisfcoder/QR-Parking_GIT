@@ -104,7 +104,7 @@ angular.module('starter.controllers', [])
 
     //REGRA CRIADA PARA NAO DEIXAR O FORMULÁRIO SER SUBMETIDO SE HOUVER ALGUM CAMPO VAZIO OU COM ERRO.
     //NÃO VALIDA OS FORMS DE CONFIRMAÇÃO
-    if($scope.administradorForm.nome == undefined || $scope.administradorForm.cpf == undefined || $scope.administradorForm.email == undefined || $scope.administradorForm.senha == undefined){
+    if($scope.administradorForm.nome == undefined || $scope.administradorForm.cpf == undefined || $scope.administradorForm.email == undefined || $scope.administradorForm.senha == undefined || $scope.administradorForm.confirmacaoEmail == undefined || $scope.administradorForm.confirmacaoSenha == undefined){
 
       $ionicPopup.alert({title: 'Erro', template: 'Por favor, preencha todos os campos corretamente.'});
 
@@ -130,7 +130,7 @@ angular.module('starter.controllers', [])
 
     if($scope.parametro.tolerancia == undefined || $scope.parametro.justificativa == undefined){
       $ionicPopup.alert({title: 'Erro', template: 'Por favor, preencha todos os campos corretamente.'});
-    return;
+      return;
     }
 
     Parametro.salvar($scope.parametro).then(function() {

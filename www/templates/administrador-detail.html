@@ -45,14 +45,14 @@
 
           <label class="item item-input">
             <span class="input-label"></span>
-            <input type="email" name="confirmacaoEmail" ng-model="administradorFormConf.email" ng-pattern="administradorForm.email" required
-            placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : 'Confirmar email'}}">
+            <input type="email" name="confirmacaoEmail" ng-model="administradorForm.confirmacaoEmail" ng-pattern="administradorForm.email" required
+            placeholder="{{administrador.nome != null ? 'Confirmar email' : 'Confirmar email'}}">
           </label>
           <div class="col text-center">
             <label>
               <span class="obrigatorio" ng-show="form.confirmacaoEmail.$dirty && form.confirmacaoEmail.$invalid">
+                <span ng-show="form.confirmacaoEmail.$error.pattern">Emails não conferem.</span>
                 <span ng-show="form.confirmacaoEmail.$error.required">Obrigatório.</span>
-                <span ng-show="form.confirmacaoEmail.$error.pattern">Emails não conferem</span>
               </span>
             </label>
           </div>
@@ -73,14 +73,14 @@
 
           <label class="item item-input">
             <span class="input-label"></span>
-            <input type="password" name="confirmacaoSenha" ng-model="confirmacaoSenha" ng-pattern="administradorForm.senha" required
-            placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : 'Confirmar senha'}}">
+            <input type="password" name="confirmacaoSenha" ng-model="administradorForm.confirmacaoSenha" ng-pattern="administradorForm.senha" required
+            placeholder="{{administrador.nome != null ? 'Confirmar senha' : 'Confirmar senha'}}">
           </label>
           <div class="col text-center">
             <label>
               <span class="obrigatorio" ng-show="form.confirmacaoSenha.$dirty && form.confirmacaoSenha.$invalid">
+                <span ng-show="form.confirmacaoSenha.$error.pattern">Senhas não conferem.</span>
                 <span ng-show="form.confirmacaoSenha.$error.required">Obrigatório.</span>
-                <span ng-show="form.confirmacaoSenha.$error.pattern">Senhas não conferem</span>
               </span>
             </label>
           </div>
