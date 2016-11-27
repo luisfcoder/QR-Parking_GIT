@@ -53,3 +53,5 @@ h4{color:#3EAC3C!important; font-size:48px!important; font-weight:bold;}
 .filtros input[type=text]{background:#f2f2f2; width:100%; border-radius: 5px; padding: 10px; border:1px solid #ccc;}
 .filtros .col-50{max-width:38%; margin-left:2px;}
 .filtros .col-20{text-align: center;}
+
+.pagination{margin-top:0!important;}

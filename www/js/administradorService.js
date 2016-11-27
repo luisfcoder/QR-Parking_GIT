@@ -1,6 +1,6 @@
 angular.module('starter.administradorService', [])
 
-.factory('Administradores', function(Restangular, ApiEndpoint) {
+.factory('Administradores', function(Restangular) {
   var endpoint = "administrador/";
 
   return {

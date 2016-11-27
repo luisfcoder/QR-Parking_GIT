@@ -1,0 +1,20 @@
+<ion-view view-title="Relatório de parâmetro">
+  <link href="lib/ng-table/src/bootstrap.min.css" rel="stylesheet">
+  <ion-content padding="true">
+    <div class="row filtros">
+      <div class="col col-50"><input type="text" placeholder="Data inicial" ng-model="periodo.dataInicial" datetime="dd/MM/yyyy" ng-click="calendarioInicial()"></div>
+      <div class="col col-50"><input type="text" placeholder="Data inicial" ng-model="periodo.dataFinal" datetime="dd/MM/yyyy" ng-click="calendarioFinal()"></div>
+      <div class="col col-20"><button ng-click="limpar()" class="button button-small icon">Limpar</button></div>
+      <div class="col col-10"><button ng-click="buscarPorPeriodo()" class="button button-small icon ion-search button-positive"></button></div>
+    </div>
+
+    <table ng-table="tableParams" class="table" show-filter="false">
+      <tr ng-repeat="dados in $data">
+        <td title="'Data'" sortable="'dtAlteracao'" align="center">{{dados.dtAlteracao | date:'dd/MM/yyyy'}}</td>
+        <td title="'Valor'" sortable="'valorMinuto'" align="center">R$ {{dados.valorMinuto | number:2}}</td>
+        <td title="'Tolerância'" sortable="'tolerancia'" align="center">{{dados.tolerancia}}</td>
+        <td title="'Responsável'" sortable="'id'" align="center">{{dados.administrador.nome}}</td>
+      </tr>
+    </table>
+  </ion-content>
+</ion-view>
