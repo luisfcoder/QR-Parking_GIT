@@ -1,6 +1,16 @@
 angular.module('starter.controllers', [])
 
-.controller('InicioCtrl', function($scope,localStorageService) {
+.controller('LeitorCtrl', function($scope, $cordovaBarcodeScanner) {
+  $cordovaBarcodeScanner.scan().then(function(imageData) {
+    alert(imageData.text);
+    console.log("Barcode Format -> " + imageData.format);
+    console.log("Cancelled -> " + imageData.cancelled);
+  }, function(error) {
+    console.log("An error happened -> " + error);
+  });
+})
+
+.controller('InicioCtrl', function($scope) {
 
 })
 
@@ -227,7 +237,7 @@ angular.module('starter.controllers', [])
         page: 1,
         count: 10,
         sorting: {
-            id: 'asc'
+          id: 'asc'
         }
       }, {
         dataset: resposta
@@ -288,7 +298,7 @@ angular.module('starter.controllers', [])
         page: 1,
         count: 10,
         sorting: {
-            dtAlteracao: 'asc'
+          dtAlteracao: 'asc'
         }
       }, {
         dataset: resposta
