@@ -152,7 +152,7 @@ angular.module('starter.controllers', [])
 
   function respostaEnvioEmail(){
     var myPopup = $ionicPopup.show({
-      template: '<input type="text" ng-model="comprovante.email">',
+      template: '<form name="form" novalidate><input type="email" name="email" ng-model="comprovante.email"><div class="col text-center"><span class="obrigatorio" ng-show="form.email.$dirty && form.email.$invalid"><span ng-show="form.email.$error.email">Email inválido.</span></span></div></form>',
       title: 'Ticket pago',
       subTitle: 'Informe seu email para receber o comprovante',
       scope: $scope,

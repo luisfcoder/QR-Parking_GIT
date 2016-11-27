@@ -6,7 +6,7 @@
     <form name="form" novalidate>
       <label class="item item-input">
         <span class="input-label">Valor do minuto:</span>
-        <input type="text" name="valorMinuto" ng-model="parametro.valorMinuto" ui-money-mask moeda="R$" maxlength="8" required>
+        <input type="text" name="valorMinuto" ng-model="parametro.valorMinuto" ui-money-mask moeda="R$" maximo="8" required>
       </label>
       <div class="col text-center">
         <label>
@@ -29,7 +29,7 @@
       <label class="item item-input">
         <span class="input-label">Justificativa</span>
         <ion-textarea placeholder="Justificativa" class="textarea">
-          <textarea name="justificativa" maxlength="150" placeholder="(Insira a justificativa)" autocomplete="off" autocorrect="off" ng-model="parametro.justificativa" required></textarea>
+          <textarea name="justificativa" maximo="150" placeholder="(Insira a justificativa)" autocomplete="off" autocorrect="off" ng-model="parametro.justificativa" required></textarea>
         </ion-textarea>
       </label>
       <div class="col text-center">
