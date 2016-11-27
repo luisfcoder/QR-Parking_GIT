@@ -1,16 +1,20 @@
 angular.module('starter.controllers', [])
 
-.controller('LeitorCtrl', function($scope, $cordovaBarcodeScanner) {
-  $scope.ler = function(){
+.controller('LeitorCtrl', function($scope, $state, $cordovaBarcodeScanner) {
+function init(){
     $cordovaBarcodeScanner.scan().then(function(imageData) {
-      alert(imageData.text);
-      console.log("Barcode Format -> " + imageData.format);
-      console.log("Cancelled -> " + imageData.cancelled);
+      var ticket = imageData.text.split("=");
+      if(ticket[0] == "ticketId"){
+        $state.go('tab.calcular-ticket', {"ticketId":ticket[1]});
+      }else{
+        $state.go('tab.administradores');
+      }
+
     }, function(error) {
       console.log("An error happened -> " + error);
     });
   }
-
+  init();
 })
 
 .controller('InicioCtrl', function($scope) {
