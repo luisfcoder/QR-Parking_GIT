@@ -6,9 +6,6 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 'starter.administradorService', 'starter.parametroService', 'starter.cartaoService', 'starter.ticketService', 'starter.relatorioService', 'ui.utils.masks', 'ngCpfCnpj', 'restangular', 'credit-cards', 'LocalStorageModule', 'ngTable', 'ionic-datepicker', 'datetime'])
-.constant('ApiEndpoint', {
-  url: 'http://localhost:8080/'
-})
 .filter('yesNo', function () {
   return function (boolean) {
     return boolean ? 'Yes' : 'No';
@@ -107,12 +104,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 's
         }
       }
     })
-    .state('tab.relatorios', {
-      url: '/relatorios',
+    .state('tab.relatorio-financeiro', {
+      url: '/relatorio-financeiro',
+      cache: false,
       views: {
         'menuContent': {
-          templateUrl: 'templates/tab-relatorios.html',
-          controller: 'RelatoriosCtrl'
+          templateUrl: 'templates/tab-relatorio-financeiro.html',
+          controller: 'RelatorioFinanceiroCtrl'
+        }
+      }
+    })
+    .state('tab.relatorio-parametro', {
+      url: '/relatorio-parametro',
+      cache: false,
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/tab-relatorio-parametro.html',
+          controller: 'RelatorioParametroCtrl'
         }
       }
     })
@@ -156,7 +164,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 's
         }
       }
     })
-  // PÁGINA SOBRE
  .state('tab.sobre', {
    url: '/sobre',
    cache: false,

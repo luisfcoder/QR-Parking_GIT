@@ -6,6 +6,10 @@ angular.module('starter.relatorioService', [])
   return {
     buscarRelatorioFinanceiroPorPeriodo: function(periodo){
       return Restangular.all(endpoint + 'financeiro/buscarRelatorioFinanceiroPorPeriodo').post(periodo);
+    },
+
+    buscarRelatorioParametroPorPeriodo: function(periodo){
+      return Restangular.all(endpoint + 'financeiro/buscarRelatorioParametroPorPeriodo').post(periodo);
     }
   };
 });

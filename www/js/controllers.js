@@ -4,66 +4,6 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('RelatoriosCtrl', function($scope, NgTableParams, Relatorio, ionicDatePicker, datetime, $ionicPopup) {
-  function init(){
-    $scope.periodo = {};
-
-    Relatorio.buscarRelatorioFinanceiroPorPeriodo($scope.periodo).then(function(resposta){
-      $scope.total = calcularTotal(resposta);
-      $scope.tableParams = new NgTableParams({}, {
-        dataset: resposta
-      });
-    });
-  }
-
-  var inicial = {
-    callback: function (val) {
-      $scope.periodo.dataInicial = new Date(val);
-    }
-  };
-
-  var final = {
-    callback: function (val) {
-      $scope.periodo.dataFinal = new Date(val);
-    }
-  };
-
-  $scope.calendarioInicial = function(){
-    ionicDatePicker.openDatePicker(inicial);
-  };
-
-  $scope.calendarioFinal = function(){
-    ionicDatePicker.openDatePicker(final);
-  };
-
-  $scope.buscarPorPeriodo = function(){
-    Relatorio.buscarRelatorioFinanceiroPorPeriodo($scope.periodo).then(function(resposta){
-      $scope.total = calcularTotal(resposta);
-      $scope.tableParams = new NgTableParams({}, {
-        dataset: resposta
-      });
-    }, function(erro) {
-      $ionicPopup.alert({title: 'Erro', template: erro.data.message});
-    });
-  };
-
-  $scope.limpar = function(){
-    $scope.periodo.dataInicial = null;
-    $scope.periodo.dataFinal = null;
-  }
-
-  function calcularTotal(resposta){
-    var soma = 0;
-    for(var i = 0; i<resposta.length; i++){
-      soma += resposta[i].valorPago;
-    }
-    return soma;
-  }
-
-  init();
-
-})
-
 .controller('AdministradoresCtrl', function($scope, Administradores) {
   $scope.busca = '';
   $scope.administradores = {};
@@ -100,8 +40,6 @@ angular.module('starter.controllers', [])
   }
 
   $scope.salvarAdministrador = function(){
-
-
     //REGRA CRIADA PARA NAO DEIXAR O FORMULÁRIO SER SUBMETIDO SE HOUVER ALGUM CAMPO VAZIO OU COM ERRO.
     //NÃO VALIDA OS FORMS DE CONFIRMAÇÃO
     if($scope.administradorForm.nome == undefined || $scope.administradorForm.cpf == undefined || $scope.administradorForm.email == undefined || $scope.administradorForm.senha == undefined || $scope.administradorForm.confirmacaoEmail == undefined || $scope.administradorForm.confirmacaoSenha == undefined){
@@ -252,5 +190,127 @@ angular.module('starter.controllers', [])
   $scope.voltar = function(){
     $state.go('tab.calcular-ticket', {"ticketId":$stateParams.ticketId});
   }
+
+})
+
+.controller('RelatorioFinanceiroCtrl', function($scope, NgTableParams, Relatorio, ionicDatePicker, datetime, $ionicPopup) {
+  function init(){
+    $scope.periodo = {};
+
+    $scope.buscarPorPeriodo();
+  }
+
+  var inicial = {
+    callback: function (val) {
+      $scope.periodo.dataInicial = new Date(val);
+    }
+  };
+
+  var final = {
+    callback: function (val) {
+      $scope.periodo.dataFinal = new Date(val);
+    }
+  };
+
+  $scope.calendarioInicial = function(){
+    ionicDatePicker.openDatePicker(inicial);
+  };
+
+  $scope.calendarioFinal = function(){
+    ionicDatePicker.openDatePicker(final);
+  };
+
+  $scope.buscarPorPeriodo = function(){
+    Relatorio.buscarRelatorioFinanceiroPorPeriodo($scope.periodo).then(function(resposta){
+      $scope.total = calcularTotal(resposta);
+      $scope.tableParams = new NgTableParams({
+        page: 1,
+        count: 10,
+        sorting: {
+            id: 'asc'
+        }
+      }, {
+        dataset: resposta
+      });
+    }, function(erro) {
+      $ionicPopup.alert({title: 'Erro', template: erro.data.message});
+    });
+  };
+
+  $scope.limpar = function(){
+    $scope.periodo.dataInicial = null;
+    $scope.periodo.dataFinal = null;
+  }
+
+  function calcularTotal(resposta){
+    var soma = 0;
+    for(var i = 0; i<resposta.length; i++){
+      soma += resposta[i].valorPago;
+    }
+    return soma;
+  }
+
+  init();
+
+})
+
+.controller('RelatorioParametroCtrl', function($scope, NgTableParams, Relatorio, ionicDatePicker, datetime, $ionicPopup) {
+  function init(){
+    $scope.periodo = {};
+
+    $scope.buscarPorPeriodo();
+  }
+
+  var inicial = {
+    callback: function (val) {
+      $scope.periodo.dataInicial = new Date(val);
+    }
+  };
+
+  var final = {
+    callback: function (val) {
+      $scope.periodo.dataFinal = new Date(val);
+    }
+  };
+
+  $scope.calendarioInicial = function(){
+    ionicDatePicker.openDatePicker(inicial);
+  };
+
+  $scope.calendarioFinal = function(){
+    ionicDatePicker.openDatePicker(final);
+  };
+
+  $scope.buscarPorPeriodo = function(){
+    Relatorio.buscarRelatorioParametroPorPeriodo($scope.periodo).then(function(resposta){
+      $scope.total = calcularTotal(resposta);
+      $scope.tableParams = new NgTableParams({
+        page: 1,
+        count: 10,
+        sorting: {
+            dtAlteracao: 'asc'
+        }
+      }, {
+        dataset: resposta
+      });
+    }, function(erro) {
+      $ionicPopup.alert({title: 'Erro', template: erro.data.message});
+    });
+  };
+
+  $scope.limpar = function(){
+    $scope.periodo.dataInicial = null;
+    $scope.periodo.dataFinal = null;
+  }
+
+  function calcularTotal(resposta){
+    var soma = 0;
+    for(var i = 0; i<resposta.length; i++){
+      soma += resposta[i].valorPago;
+    }
+    return soma;
+  }
+
+  init();
 
 });
