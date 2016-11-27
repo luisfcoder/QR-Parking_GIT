@@ -4,12 +4,8 @@ angular.module('starter.relatorioService', [])
   var endpoint = "relatorio/";
 
   return {
-    buscarRelatorioFinanceiro: function() {
-      return Restangular.all(endpoint + 'financeiro/buscarTodos').getList();
-    },
-
-    buscarRelatorioFinanceiroPorPeriodo: function(periodo) {
-      return Restangular.all(endpoint + 'financeiro/buscarRelatorioFinanceiroPorPeriodo', periodo).getList();
+    buscarRelatorioFinanceiroPorPeriodo: function(periodo){
+      return Restangular.all(endpoint + 'financeiro/buscarRelatorioFinanceiroPorPeriodo').post(periodo);
     }
   };
 });
