@@ -4,14 +4,11 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('RelatoriosCtrl', function($scope, NgTableParams, Relatorio, ionicDatePicker, datetime) {
+.controller('RelatoriosCtrl', function($scope, NgTableParams, Relatorio, ionicDatePicker, datetime, $ionicPopup) {
   function init(){
     $scope.periodo = {};
-    $scope.periodo.dataInicial = "0";
-    $scope.periodo.dataFinal = "0";
 
-    var lista = [];
-    Relatorio.buscarRelatorioFinanceiro().then(function(resposta){
+    Relatorio.buscarRelatorioFinanceiroPorPeriodo($scope.periodo).then(function(resposta){
       $scope.total = calcularTotal(resposta);
       $scope.tableParams = new NgTableParams({}, {
         dataset: resposta
@@ -20,13 +17,13 @@ angular.module('starter.controllers', [])
   }
 
   var inicial = {
-    callback: function (val) {  //Mandatory
+    callback: function (val) {
       $scope.periodo.dataInicial = new Date(val);
     }
   };
 
   var final = {
-    callback: function (val) {  //Mandatory
+    callback: function (val) {
       $scope.periodo.dataFinal = new Date(val);
     }
   };
@@ -40,13 +37,19 @@ angular.module('starter.controllers', [])
   };
 
   $scope.buscarPorPeriodo = function(){
-    var lista = [];
     Relatorio.buscarRelatorioFinanceiroPorPeriodo($scope.periodo).then(function(resposta){
       $scope.total = calcularTotal(resposta);
       $scope.tableParams = new NgTableParams({}, {
         dataset: resposta
       });
+    }, function(erro) {
+      $ionicPopup.alert({title: 'Erro', template: erro.data.message});
     });
+  };
+
+  $scope.limpar = function(){
+    $scope.periodo.dataInicial = null;
+    $scope.periodo.dataFinal = null;
   }
 
   function calcularTotal(resposta){
@@ -101,7 +104,7 @@ angular.module('starter.controllers', [])
 
     //REGRA CRIADA PARA NAO DEIXAR O FORMULÁRIO SER SUBMETIDO SE HOUVER ALGUM CAMPO VAZIO OU COM ERRO.
     //NÃO VALIDA OS FORMS DE CONFIRMAÇÃO
-    if($scope.administradorForm.nome == undefined || $scope.administradorForm.cpf == undefined || $scope.administradorForm.email == undefined || $scope.administradorForm.senha == undefined){
+    if($scope.administradorForm.nome == undefined || $scope.administradorForm.cpf == undefined || $scope.administradorForm.email == undefined || $scope.administradorForm.senha == undefined || $scope.administradorForm.confirmacaoEmail == undefined || $scope.administradorForm.confirmacaoSenha == undefined){
 
       $ionicPopup.alert({title: 'Erro', template: 'Por favor, preencha todos os campos corretamente.'});
 
@@ -126,8 +129,8 @@ angular.module('starter.controllers', [])
   $scope.salvarParametro = function(){
 
     if($scope.parametro.tolerancia == undefined || $scope.parametro.justificativa == undefined){
-      $ionicPopup.alert({title: 'Erro!', template: 'Por favor, preencha todos os campos corretamente.'});
-    return;
+      $ionicPopup.alert({title: 'Erro', template: 'Por favor, preencha todos os campos corretamente.'});
+      return;
     }
 
     Parametro.salvar($scope.parametro).then(function() {
@@ -174,6 +177,7 @@ angular.module('starter.controllers', [])
               processarPagamento();
               return;
             } else {
+              $ionicPopup.alert({title: 'Erro', template: "Selecione um cartão"});
               e.preventDefault();
             }
           }
@@ -201,7 +205,7 @@ angular.module('starter.controllers', [])
   function respostaEnvioEmail(){
     var myPopup = $ionicPopup.show({
       template: '<input type="text" ng-model="comprovante.email">',
-      title: 'Ticket pago!',
+      title: 'Ticket pago',
       subTitle: 'Informe seu email para receber o comprovante',
       scope: $scope,
       buttons: [
