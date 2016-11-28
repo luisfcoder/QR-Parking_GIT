@@ -3,25 +3,23 @@
     <div class="bar bar-header">
       <div class="h1 title">Calcular ticket</div>
     </div>
-
     <form name="form" novalidate class="margem-topo">
-      <center><h4 ng-show="dadosPagamento.valor == 0">Ticket dentro da tolerância, saída liberada!</h4></center>
-      <center><h4 ng-show="pago">Saída liberada!</h4></center>
-
-      <div ng-show="dadosPagamento.valor > 0 && !pago">
-        <div class="item total-pagar">
-          Total a pagar:
-          <span class="item-note">R$ {{dadosPagamento.valor | number:2}}</span>
+      <center><h4 ng-show="dadosPagamento.valor == 0">Ticket dentro da tolerância, saída liberada!</p>
+        <img src="img/saida-liberada.png" width="30%"></h4></center>
+        <center><h4 ng-show="pago">Saída liberada!</h4></center>
+        <div ng-show="dadosPagamento.valor > 0 && !pago">
+          <div class="item total-pagar">
+            Total a pagar:
+            <span class="item-note">R$ {{dadosPagamento.valor | number:2}}</span>
+          </div>
+          <div class="item permanencia">
+            Tempo de permanência:
+            <span class="item-note">{{permanencia}} minutos</span>
+          </div>
+          <button ng-click="formaPagamento()" class="button button-block icon ion-card button-positive">
+            Selecionar cartão
+          </button>
         </div>
-
-        <div class="item permanencia">
-          Tempo de permanência:
-          <span class="item-note">{{permanencia}} minutos</span>
-        </div>
-        <button ng-click="formaPagamento()" class="button button-block icon ion-card button-positive">
-          Selecionar cartão
-        </button>
-      </div>
-    </form>
-  </ion-content>
-</ion-view>
+      </form>
+    </ion-content>
+  </ion-view>
