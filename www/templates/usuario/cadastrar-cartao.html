@@ -49,14 +49,17 @@
               <input placeholder="Ano" type="number" maximo="2" class="form-control" cc-exp-year name="ccExpYear" ng-model="card.expiration.year" ng-minlength="2" required>
             </div>
           </label>
-          <div class="col text-center">
-            <label>
-              <span class="obrigatorio" ng-show="ccForm.$error.ccExp">
-                <span ng-show="ccForm.$error.ccExp">Data inválida.</span>
-              </span>
-            </label>
-          </div>
+          <label>
+          </label>
         </div>
       </div>
-    </form>
-  </ion-view>
+      <div class="col text-center">
+        <label>
+          <span class="obrigatorio" ng-show="ccForm.$error.ccExp">
+            <span ng-show="ccForm.$error.ccExp">Data inválida.</span>
+          </span>
+        </label>
+      </div>
+    </div>
+  </form>
+</ion-view>
