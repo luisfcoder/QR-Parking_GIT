@@ -1,9 +1,9 @@
 angular.module('starter.controllers', [])
 
-.controller('LeitorCtrl', function($scope, $state, $cordovaBarcodeScanner, $ionicPopup, $ionicHistory, $window, $ionicSideMenuDelegate) {
+.controller('LeitorCtrl', function($scope, $state, $stateParams, $cordovaBarcodeScanner, $ionicPopup, $ionicHistory, $window, $ionicSideMenuDelegate, Ticket) {
   $ionicSideMenuDelegate.canDragContent(false);
   $scope.exibeNavegador = false;
-  
+
   $scope.lerQrCode = function() {
     try{
       $cordovaBarcodeScanner.scan().then(function(imageData) {
@@ -14,7 +14,6 @@ angular.module('starter.controllers', [])
     } catch (e) {
       $scope.exibeNavegador = true;
     }
-
   };
 
   $scope.onSuccess = function(imageData) {
@@ -28,19 +27,26 @@ angular.module('starter.controllers', [])
 
   function destino(imageData){
     var ticket = imageData.split("=");
-    console.log("Leitura :" + imageData);
 
     $ionicHistory.nextViewOptions({
       disableAnimate: true,
       disableBack: true
     });
 
-    if(ticket[0] == "ticketId"){
-      $state.go('tab.calcular-ticket', {"ticketId":ticket[1]});
-    }
+    if($stateParams.local != "saida"){
+      if(ticket[0] == "ticketId"){
+        $state.go('tab.calcular-ticket', {"ticketId":ticket[1]});
+      }
 
-    if(ticket[0] == "administrador"){
-      $window.location.href = '#/tab/inicio';
+      if(ticket[0] == "administrador"){
+        $window.location.href = '#/tab/inicio';
+      }
+    }else{
+      Ticket.validarSaida(ticket[1]).then(function(resposta){
+        $ionicPopup.alert({title: 'Obrigado', resposta.valor});
+      }, function(erro){
+        $ionicPopup.alert({title: 'Erro', template: erro.data.message});
+      });
     }
   }
 })

@@ -75,7 +75,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 's
   // Each tab has its own nav history stack:
 
   .state('tab.leitor', {
-    url: '/leitor',
+    url: '/leitor/:local',
     cache: false,
     views: {
       'menuContent': {

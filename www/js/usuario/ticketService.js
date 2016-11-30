@@ -14,6 +14,10 @@ angular.module('starter.ticketService', [])
 
     processarPagamento: function(dadosPagamento){
       return Restangular.all(endpoint + 'processarPagamento').post(dadosPagamento);
+    },
+
+    validarSaida: function(ticketId){
+      return Restangular.one(endpoint + 'validarSaida', ticketId).get();
     }
   };
 });
