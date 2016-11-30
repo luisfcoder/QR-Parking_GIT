@@ -187,6 +187,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 's
   //PÁGINA SOBRE
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/leitor/entrada');
+  $urlRouterProvider.otherwise('/tab/usuario/gerar-ticket');
 
 });

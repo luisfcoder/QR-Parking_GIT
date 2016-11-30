@@ -36,11 +36,13 @@ angular.module('starter.controllers', [])
     if($stateParams.local != "saida"){
       if(ticket[0] == "ticketId"){
         $state.go('tab.calcular-ticket', {"ticketId":ticket[1]});
+      }else if(ticket[0] == "administrador"){
+        $window.location.href = '#/tab/inicio';
+      }else{
+        $ionicPopup.alert({title: 'Erro', template: "Ticket inválido, procure a administração."});
       }
 
-      if(ticket[0] == "administrador"){
-        $window.location.href = '#/tab/inicio';
-      }
+
     }else{
       Ticket.validarSaida(ticket[1]).then(function(resposta){
         $ionicPopup.alert({title: 'Obrigado', template: resposta.valor});
@@ -148,6 +150,9 @@ angular.module('starter.controllers', [])
   Ticket.calcular($stateParams.ticketId).then(function(resposta){
     $scope.dadosPagamento.valor = resposta.valor;
     $scope.permanencia = resposta.permanencia;
+  }, function(erro){
+    $ionicPopup.alert({title: 'Erro', template: erro.data.message});
+    $state.go('tab.leitor', {"local": "entrada"});
   });
 
   $scope.formaPagamento = function(){
