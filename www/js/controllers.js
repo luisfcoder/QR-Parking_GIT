@@ -43,7 +43,7 @@ angular.module('starter.controllers', [])
       }
     }else{
       Ticket.validarSaida(ticket[1]).then(function(resposta){
-        $ionicPopup.alert({title: 'Obrigado', resposta.valor});
+        $ionicPopup.alert({title: 'Obrigado', template: resposta.valor});
       }, function(erro){
         $ionicPopup.alert({title: 'Erro', template: erro.data.message});
       });
