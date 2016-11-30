@@ -1,20 +1,51 @@
 angular.module('starter.controllers', [])
 
-.controller('LeitorCtrl', function($scope, $state, $cordovaBarcodeScanner) {
-function init(){
-    $cordovaBarcodeScanner.scan().then(function(imageData) {
-      var ticket = imageData.text.split("=");
-      if(ticket[0] == "ticketId"){
-        $state.go('tab.calcular-ticket', {"ticketId":ticket[1]});
-      }else{
-        $state.go('tab.administradores');
-      }
-
-    }, function(error) {
-      console.log("An error happened -> " + error);
-    });
+.controller('LeitorCtrl', function($scope, $state, $cordovaBarcodeScanner, $ionicPopup, $ionicHistory, $window, $ionicSideMenuDelegate) {
+  $ionicSideMenuDelegate.canDragContent(false);
+  function init(){
+    try{
+      carregarPluginParaCelular();
+    } catch (e) {
+      carregarPluginParaNavegador();
+    }
   }
   init();
+
+  function carregarPluginParaCelular(){
+    $cordovaBarcodeScanner.scan().then(function(imageData) {
+      destino(imageData.text);
+    }, function(error) {
+    });
+  }
+
+  function carregarPluginParaNavegador(){
+    $scope.onSuccess = function(imageData) {
+      destino(imageData);
+    };
+    $scope.onError = function(error) {
+    };
+    $scope.onVideoError = function(error) {
+      $ionicPopup.alert({title: 'Erro', template: error});
+    };
+  }
+
+  function destino(imageData){
+    var ticket = imageData.split("=");
+    console.log("Leitura :" + imageData);
+
+    $ionicHistory.nextViewOptions({
+      disableAnimate: true,
+      disableBack: true
+    });
+
+    if(ticket[0] == "ticketId"){
+      $state.go('tab.calcular-ticket', {"ticketId":ticket[1]});
+    }
+
+    if(ticket[0] == "administrador"){
+      $window.location.href = '#/tab/inicio';
+    }
+  }
 })
 
 .controller('InicioCtrl', function($scope) {
