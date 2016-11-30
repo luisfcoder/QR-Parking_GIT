@@ -1,4 +1,4 @@
-<ion-view view-title="" hide-nav-bar="true" >
-  <!-- <qr-scanner class="camera" ng-success="onSuccess(data)" ng-error="onError(error)" /> -->
-  <div id="reader" class="camera" ></div>
+<ion-view view-title="" hide-nav-bar="true">
+  <img src="img/lerQrCode.png" ng-show="!exibeNavegador" width="100%" ng-click="lerQrCode()" />
+  <qr-scanner class="camera" ng-show="exibeNavegador" ng-success="onSuccess(data)" ng-error="onError(error)" />
 </ion-view>

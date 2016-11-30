@@ -2,32 +2,29 @@ angular.module('starter.controllers', [])
 
 .controller('LeitorCtrl', function($scope, $state, $cordovaBarcodeScanner, $ionicPopup, $ionicHistory, $window, $ionicSideMenuDelegate) {
   $ionicSideMenuDelegate.canDragContent(false);
-  function init(){
+  $scope.exibeNavegador = false;
+  
+  $scope.lerQrCode = function() {
     try{
-      carregarPluginParaCelular();
+      $cordovaBarcodeScanner.scan().then(function(imageData) {
+        destino(imageData.text);
+      }, function(error) {
+        $ionicPopup.alert({title: 'Erro', template: error});
+      });
     } catch (e) {
-      carregarPluginParaNavegador();
+      $scope.exibeNavegador = true;
     }
-  }
-  init();
 
-  function carregarPluginParaCelular(){
-    $cordovaBarcodeScanner.scan().then(function(imageData) {
-      destino(imageData.text);
-    }, function(error) {
-    });
-  }
+  };
 
-  function carregarPluginParaNavegador(){
-    $scope.onSuccess = function(imageData) {
-      destino(imageData);
-    };
-    $scope.onError = function(error) {
-    };
-    $scope.onVideoError = function(error) {
-      $ionicPopup.alert({title: 'Erro', template: error});
-    };
-  }
+  $scope.onSuccess = function(imageData) {
+    destino(imageData);
+  };
+  $scope.onError = function(error) {
+  };
+  $scope.onVideoError = function(error) {
+    $ionicPopup.alert({title: 'Erro', template: error});
+  };
 
   function destino(imageData){
     var ticket = imageData.split("=");
