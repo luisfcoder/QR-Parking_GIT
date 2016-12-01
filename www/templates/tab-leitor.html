@@ -1,4 +1,8 @@
 <ion-view view-title="" hide-nav-bar="true">
-  <img src="img/lerQrCode.png" ng-show="!exibeNavegador" width="100%" ng-click="lerQrCode()" />
-  <qr-scanner class="camera" ng-show="exibeNavegador" ng-success="onSuccess(data)" ng-error="onError(error)" />
+  <ion-content class="padding fundo-azul">
+    <div class="col text-center">
+      <img src="img/btn-leitor.png" ng-show="!exibeNavegador" width="50%" ng-click="lerQrCode()" />
+      <qr-scanner class="camera" ng-show="exibeNavegador" ng-success="onSuccess(data)" ng-error="onError(error)" />
+    </div>
+  </ion-content>
 </ion-view>
