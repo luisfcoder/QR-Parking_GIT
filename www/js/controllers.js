@@ -39,7 +39,7 @@ angular.module('starter.controllers', [])
       }else if(ticket[0] == "administrador"){
         $window.location.href = '#/tab/login';
       }else{
-        $ionicPopup.alert({title: 'Erro', template: "Ticket inválido, procure a administração."});
+        $ionicPopup.alert({title: 'Erro', template: "Ticket inválido, procure a administração." + imageData});
       }
 
 
