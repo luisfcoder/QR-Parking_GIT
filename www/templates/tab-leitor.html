@@ -1,10 +1,4 @@
 <ion-view view-title="" hide-nav-bar="true">
-  <ion-content class="padding fundo-azul">
-    <div class="col text-center">
-      <img src="img/btn-leitor.png" ng-show="!exibeNavegador" width="50%" ng-click="lerQrCode()" />
-      <h4>Toque no ícone para ler o ticket.</h4>
-      <qr-scanner class="camera" ng-show="exibeNavegador" ng-success="onSuccess(data)" ng-error="onError(error)" />
-
-    </div>
-  </ion-content>
+  <img src="img/btn-leitor.png" ng-show="!exibeNavegador" width="100%" ng-click="lerQrCode()" />
+  <qr-scanner class="camera" ng-show="exibeNavegador" ng-success="onSuccess(data)" ng-error="onError(error)" />
 </ion-view>

@@ -54,9 +54,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('InicioCtrl', function($scope, localStorageService, Autenticacao) {
-  $scope.sair = function(){
-    localStorageService.remove("usuarioLogado");
-  }
   Autenticacao.verificar();
 })
 
@@ -75,6 +72,10 @@ angular.module('starter.controllers', [])
     }, function(erro){
       $ionicPopup.alert({title: 'Erro', template: erro.data.message});
     })
+  }
+
+  $scope.sair = function(){
+      localStorageService.remove("usuarioLogado");
   }
 })
 
