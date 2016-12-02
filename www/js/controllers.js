@@ -37,7 +37,7 @@ angular.module('starter.controllers', [])
       if(ticket[0] == "ticketId"){
         $state.go('tab.calcular-ticket', {"ticketId":ticket[1]});
       }else if(ticket[0] == "administrador"){
-        $window.location.href = '#/tab/inicio';
+        $window.location.href = '#/tab/login';
       }else{
         $ionicPopup.alert({title: 'Erro', template: "Ticket inválido, procure a administração."});
       }
