@@ -10,27 +10,34 @@
       || (!ccForm.ccExpMonth.$valid
       || !ccForm.ccExpYear.$valid)" ng-click="salvarCartao()"></a>
     </div>
-
     <form name="ccForm" class="margem-topo">
       <label class="item item-input">
         <span class="input-label">Número do cartão</span>
-        <input type="text" class="form-control" id="cardNumber" cc-number cc-eager-type name="ccNumber" ng-model="card.number">
-        <span class="obrigatorio" ng-show="ccForm.ccNumber.$invalid">
-          <span ng-show="ccForm.ccNumber.$invalid">Invalido.</span>
-        </span>
-        <span>
-          {{ccForm.ccNumber.$ccType}}
-        </span>
+        <input type="text" maximo="16" class="form-control" id="cardNumber" cc-number cc-eager-type name="ccNumber" ng-model="card.number">
       </label>
-
+      <div class="col text-center">
+        <label>
+          <span class="obrigatorio" ng-show="ccForm.ccNumber.$invalid">
+            <span ng-show="ccForm.ccNumber.$invalid">Invalido.</span>
+          </span>
+        </label>
+      </div>
+      <span>
+        <div class=" col text-center">
+          <img src="img/{{ccForm.ccNumber.$ccType}}.png"/>
+        </div>
+      </span>
       <label class="item item-input">
         <span class="input-label">Código de verificação</span>
         <input type="text" maximo="3" ng-minlength="3" class="form-control" id="cvc" cc-cvc cc-type="ccForm.ccNumber.$ccType" name="ccCvc" ng-model="card.cvc" required>
-        <span class="obrigatorio" ng-show="ccForm.ccCvc.$dirty && ccForm.ccCvc.$invalid">
-          <span ng-show="ccForm.ccCvc.$error.required">Obrigatório.</span>
-        </span>
       </label>
-
+      <div class="col text-center">
+        <label>
+          <span class="obrigatorio" ng-show="ccForm.ccCvc.$dirty && ccForm.ccCvc.$invalid">
+            <span ng-show="ccForm.ccCvc.$error.required">Obrigatório.</span>
+          </span>
+        </label>
+      </div>
       <div class="item">
         <label for="card-number">
           <span class="input-label">Data de validade:</span>
@@ -41,14 +48,15 @@
             <div class="col-xs-1">
               <input placeholder="Ano" type="text" class="form-control" cc-exp-year name="ccExpYear" ng-model="card.expiration.year" ng-minlength="2" required>
             </div>
-            <div class="col-xs-1">
-              <span class="obrigatorio" ng-show="ccForm.$error.ccExp">
-                <span ng-show="ccForm.$error.ccExp">Data inválida.</span>
-              </span>
-            </div>
           </div>
         </label>
       </div>
+      <div class="col text-center">
+        <label>
+          <span class="obrigatorio" ng-show="ccForm.$error.ccExp">
+            <span ng-show="ccForm.$error.ccExp">Data inválida.</span>
+          </span>
+        </label>
+      </div>
     </form>
-  </div>
-</ion-view>
+  </ion-view>

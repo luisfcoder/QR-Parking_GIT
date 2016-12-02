@@ -1,20 +1,56 @@
 angular.module('starter.controllers', [])
 
-.controller('LeitorCtrl', function($scope, $state, $cordovaBarcodeScanner) {
-function init(){
-    $cordovaBarcodeScanner.scan().then(function(imageData) {
-      var ticket = imageData.text.split("=");
+.controller('LeitorCtrl', function($scope, $state, $stateParams, $cordovaBarcodeScanner, $ionicPopup, $ionicHistory, $window, $ionicSideMenuDelegate, Ticket) {
+  $ionicSideMenuDelegate.canDragContent(false);
+  $scope.exibeNavegador = false;
+
+  $scope.lerQrCode = function() {
+    try{
+      $cordovaBarcodeScanner.scan().then(function(imageData) {
+        destino(imageData.text);
+      }, function(error) {
+        $ionicPopup.alert({title: 'Erro', template: error});
+      });
+    } catch (e) {
+      $scope.exibeNavegador = true;
+    }
+  };
+
+  $scope.onSuccess = function(imageData) {
+    destino(imageData);
+  };
+  $scope.onError = function(error) {
+  };
+  $scope.onVideoError = function(error) {
+    $ionicPopup.alert({title: 'Erro', template: error});
+  };
+
+  function destino(imageData){
+    var ticket = imageData.split("=");
+
+    $ionicHistory.nextViewOptions({
+      disableAnimate: true,
+      disableBack: true
+    });
+
+    if($stateParams.local != "saida"){
       if(ticket[0] == "ticketId"){
         $state.go('tab.calcular-ticket', {"ticketId":ticket[1]});
+      }else if(ticket[0] == "administrador"){
+        $window.location.href = '#/tab/inicio';
       }else{
-        $state.go('tab.administradores');
+        $ionicPopup.alert({title: 'Erro', template: "Ticket inválido, procure a administração."});
       }
 
-    }, function(error) {
-      console.log("An error happened -> " + error);
-    });
+
+    }else{
+      Ticket.validarSaida(ticket[1]).then(function(resposta){
+        $ionicPopup.alert({title: 'Obrigado', template: resposta.valor});
+      }, function(erro){
+        $ionicPopup.alert({title: 'Erro', template: erro.data.message});
+      });
+    }
   }
-  init();
 })
 
 .controller('InicioCtrl', function($scope) {
@@ -118,6 +154,9 @@ function init(){
   Ticket.calcular($stateParams.ticketId).then(function(resposta){
     $scope.dadosPagamento.valor = resposta.valor;
     $scope.permanencia = resposta.permanencia;
+  }, function(erro){
+    $ionicPopup.alert({title: 'Erro', template: erro.data.message});
+    $state.go('tab.leitor', {"local": "entrada"});
   });
 
   $scope.formaPagamento = function(){

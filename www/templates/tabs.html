@@ -17,12 +17,12 @@
       <h1 class="title">Administração</h1>
     </ion-header-bar>
     <ion-content>
-      <ion-list>
+      <ion-list ng-controller="InicioCtrl">
         <ion-item menu-close href="#/tab/inicio">
           <i class="icon ion-home"></i>
           Início
         </ion-item>
-        <ion-item menu-close href="#/tab/administradores">
+        <ion-item menu-close ui-sref="tab.administradores">
           <i class="icon ion-person-stalker"></i>
           Administradores
         </ion-item>
@@ -38,7 +38,7 @@
           <i class="icon ion-pie-graph"></i>
           Relatório de Parâmetros
         </ion-item>
-          <ion-item menu-close href="#/tab/sobre">
+        <ion-item menu-close href="#/tab/sobre">
           <i class="icon ion-social-buffer"></i>
           Sobre
         </ion-item>
