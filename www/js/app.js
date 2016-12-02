@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 'starter.administradorService', 'starter.parametroService', 'starter.cartaoService', 'starter.ticketService', 'starter.relatorioService', 'ui.utils.masks', 'ngCpfCnpj', 'restangular', 'credit-cards', 'LocalStorageModule', 'ngTable', 'ionic-datepicker', 'datetime', 'ngCordova', 'qrScanner'])
+angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 'starter.administradorService', 'starter.parametroService', 'starter.autenticacaoService', 'starter.cartaoService', 'starter.ticketService', 'starter.relatorioService', 'ui.utils.masks', 'ngCpfCnpj', 'restangular', 'credit-cards', 'LocalStorageModule', 'ngTable', 'ionic-datepicker', 'datetime', 'ngCordova', 'qrScanner'])
 .filter('yesNo', function () {
   return function (boolean) {
     return boolean ? 'Yes' : 'No';

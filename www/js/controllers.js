@@ -12,6 +12,7 @@ angular.module('starter.controllers', [])
         $ionicPopup.alert({title: 'Erro', template: error});
       });
     } catch (e) {
+      $ionicPopup.alert({title: 'Erro', template: e});
       $scope.exibeNavegador = true;
     }
   };
