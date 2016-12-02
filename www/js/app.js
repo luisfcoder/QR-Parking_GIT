@@ -94,6 +94,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 's
       }
     }
   })
+  .state('tab.login', {
+    url: '/login',
+    cache: false,
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/tab-login.html',
+        controller: 'LoginCtrl'
+      }
+    }
+  })
   .state('tab.administradores', {
     url: '/administradores',
     cache: false,

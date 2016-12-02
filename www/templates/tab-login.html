@@ -1,0 +1,39 @@
+<ion-view view-title="Login" hide-nav-bar="true">
+  <ion-content padding="true" class="usuario">
+    <div class="bar bar-header">
+      <div class="h1 title">Login</div>
+    </div>
+    <form name="form" novalidate class="margem-topo">
+      <label class="item item-input">
+        <span class="input-label">CPF</span>
+        <input type="text" name="cpf" ng-model="administradorForm.cpf" ng-cpf ui-br-cpf-mask required>
+      </label>
+      <div class="col text-center">
+        <label>
+          <span class="obrigatorio" ng-show="form.cpf.$dirty && form.cpf.$invalid">
+            <span ng-show="form.cpf.$error.required">Obrigatório.</span>
+            <span ng-show="!form.cpf.$error.required && !form.cpf.$valid">CPF inválido.</span>
+          </span>
+        </label>
+      </div>
+
+      <label class="item item-input">
+        <span class="input-label">Senha</span>
+        <input type="password" name="senha" maximo="20" ng-model="administradorForm.senha" required ng-minlength="6"
+        placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : ''}}">
+      </label>
+      <div class="col text-center">
+        <label>
+          <span class="obrigatorio" ng-show="form.senha.$dirty && form.senha.$invalid">
+            <span ng-show="form.$error.minlength">Mínimo 6 caracteres.</span>
+            <span ng-show="form.senha.$error.required">Obrigatório.</span>
+          </span>
+        </label>
+      </div>
+
+      <button ng-click="formaPagamento()" class="button button-block icon ion-android-lock button-positive">
+        Entrar
+      </button>
+      </form>
+    </ion-content>
+  </ion-view>

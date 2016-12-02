@@ -21,6 +21,10 @@ function init(){
 
 })
 
+.controller('LoginCtrl', function($scope) {
+
+})
+
 .controller('AdministradoresCtrl', function($scope, Administradores) {
   $scope.busca = '';
   $scope.administradores = {};
