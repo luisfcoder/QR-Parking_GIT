@@ -242,9 +242,9 @@ angular.module('starter.controllers', [])
               e.preventDefault();
             } else {
               Ticket.enviarEmail($scope.comprovante).then(function(){
-                $ionicPopup.alert({title: 'Obrigado', template: "Email enviado com sucesso"});
+                $ionicPopup.alert({title: 'Obrigado', template: "Email enviado com exito."});
               }, function(erro){
-                $ionicPopup.alert({title: 'Erro', template: "Ocorreu um erro ao enviar o comprovante"});
+                $ionicPopup.alert({title: 'Erro', template: "Ocorreu um erro ao enviar o comprovante."});
               });
               return;
             }
