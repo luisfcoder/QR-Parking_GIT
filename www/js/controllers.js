@@ -53,15 +53,27 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('InicioCtrl', function($scope) {
-
+.controller('InicioCtrl', function($scope, localStorageService, Autenticacao) {
+  $scope.sair = function(){
+    localStorageService.remove("usuarioLogado");
+  }
+  Autenticacao.verificar();
 })
 
-.controller('LoginCtrl', function($scope) {
-
+.controller('LoginCtrl', function($scope, $state, $ionicPopup, localStorageService, Administradores) {
+  $scope.loginForm = {};
+  $scope.entrar = function(){
+    Administradores.autenticar($scope.loginForm).then(function(){
+      localStorageService.set("usuarioLogado", new Date().getTime());
+      $state.go('tab.inicio');
+    }, function(erro){
+      $ionicPopup.alert({title: 'Erro', template: erro.data.message});
+    })
+  }
 })
 
-.controller('AdministradoresCtrl', function($scope, Administradores) {
+.controller('AdministradoresCtrl', function($scope, Administradores, Autenticacao) {
+  Autenticacao.verificar();
   $scope.busca = '';
   $scope.administradores = {};
 
@@ -86,7 +98,8 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('AdministradorDetailCtrl', function($scope, $ionicPopup, $stateParams, Administradores, $state) {
+.controller('AdministradorDetailCtrl', function($scope, $ionicPopup, $stateParams, Administradores, $state, Autenticacao) {
+  Autenticacao.verificar();
   $scope.administradorForm = {};
   if($stateParams.administradorId != ""){
     Administradores.buscarPorId($stateParams.administradorId).then(function(resposta){
@@ -115,8 +128,8 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller("ParametroCtrl", function($scope, $ionicPopup, Parametro){
-
+.controller("ParametroCtrl", function($scope, $ionicPopup, Parametro, Autenticacao){
+  Autenticacao.verificar();
   Parametro.buscarAtual().then(function(resposta){
     $scope.parametro = resposta;
   });
@@ -253,7 +266,8 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('RelatorioFinanceiroCtrl', function($scope, NgTableParams, Relatorio, ionicDatePicker, datetime, $ionicPopup) {
+.controller('RelatorioFinanceiroCtrl', function($scope, NgTableParams, Relatorio, ionicDatePicker, datetime, $ionicPopup, Autenticacao) {
+  Autenticacao.verificar();
   function init(){
     $scope.periodo = {};
 
@@ -314,7 +328,8 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('RelatorioParametroCtrl', function($scope, NgTableParams, Relatorio, ionicDatePicker, datetime, $ionicPopup) {
+.controller('RelatorioParametroCtrl', function($scope, NgTableParams, Relatorio, ionicDatePicker, datetime, $ionicPopup, Autenticacao) {
+  Autenticacao.verificar();
   function init(){
     $scope.periodo = {};
 

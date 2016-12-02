@@ -14,6 +14,10 @@ angular.module('starter.administradorService', [])
 
     buscarPorId: function(administradorId) {
       return Restangular.one(endpoint + 'buscarPorId', administradorId).get();
+    },
+
+    autenticar: function(credenciais){
+      return Restangular.all(endpoint + 'buscarPorCredenciais').post(credenciais);
     }
   };
 });

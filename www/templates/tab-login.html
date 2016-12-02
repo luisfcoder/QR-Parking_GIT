@@ -6,7 +6,7 @@
     <form name="form" novalidate class="margem-topo">
       <label class="item item-input">
         <span class="input-label">CPF</span>
-        <input type="text" name="cpf" ng-model="administradorForm.cpf" ng-cpf ui-br-cpf-mask required>
+        <input type="text" name="cpf" ng-model="loginForm.cpf" ng-cpf ui-br-cpf-mask required>
       </label>
       <div class="col text-center">
         <label>
@@ -19,8 +19,7 @@
 
       <label class="item item-input">
         <span class="input-label">Senha</span>
-        <input type="password" name="senha" maximo="20" ng-model="administradorForm.senha" required ng-minlength="6"
-        placeholder="{{administrador.nome != null ? 'Preencha somente caso queira alterar' : ''}}">
+        <input type="password" name="senha" maximo="20" ng-model="loginForm.senha" required ng-minlength="6">
       </label>
       <div class="col text-center">
         <label>
@@ -31,7 +30,7 @@
         </label>
       </div>
 
-      <button ng-click="formaPagamento()" class="button button-block icon ion-android-lock button-positive">
+      <button ng-click="entrar()" class="button button-block icon ion-android-lock button-positive">
         Entrar
       </button>
       </form>
