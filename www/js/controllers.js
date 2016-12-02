@@ -60,11 +60,17 @@ angular.module('starter.controllers', [])
   Autenticacao.verificar();
 })
 
-.controller('LoginCtrl', function($scope, $state, $ionicPopup, localStorageService, Administradores) {
+.controller('LoginCtrl', function($scope, $state, $ionicPopup, localStorageService, Autenticacao, $ionicHistory) {
   $scope.loginForm = {};
+
+  $ionicHistory.nextViewOptions({
+    disableAnimate: true,
+    disableBack: true
+  });
+
   $scope.entrar = function(){
-    Administradores.autenticar($scope.loginForm).then(function(){
-      localStorageService.set("usuarioLogado", new Date().getTime());
+    Autenticacao.autenticar($scope.loginForm).then(function(resposta){
+      localStorageService.set("usuarioLogado", resposta);
       $state.go('tab.inicio');
     }, function(erro){
       $ionicPopup.alert({title: 'Erro', template: erro.data.message});
@@ -72,8 +78,9 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('AdministradoresCtrl', function($scope, Administradores, Autenticacao) {
+.controller('AdministradoresCtrl', function($scope, Administradores, $ionicPopup, Autenticacao, localStorageService) {
   Autenticacao.verificar();
+  var logado = localStorageService.get("usuarioLogado");
   $scope.busca = '';
   $scope.administradores = {};
 
@@ -89,13 +96,17 @@ angular.module('starter.controllers', [])
   }
 
   $scope.ativarInativar = function(administrador) {
-    if(administrador.dtInativacao == null){
-      administrador.dtInativacao = new Date();
+    if(logado.id != administrador.id){
+      if(administrador.dtInativacao == null){
+        administrador.dtInativacao = new Date();
+      }else{
+        administrador.dtInativacao = null;
+      }
+      Administradores.salvar(administrador);
     }else{
-      administrador.dtInativacao = null;
+      $ionicPopup.alert({title: 'Erro', template: "O administrador logado, não pode desativar seu registro."});
     }
-    Administradores.salvar(administrador);
-  };
+  }
 })
 
 .controller('AdministradorDetailCtrl', function($scope, $ionicPopup, $stateParams, Administradores, $state, Autenticacao) {
@@ -128,7 +139,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller("ParametroCtrl", function($scope, $ionicPopup, Parametro, Autenticacao){
+.controller("ParametroCtrl", function($scope, $ionicPopup, Parametro, localStorageService, Autenticacao){
   Autenticacao.verificar();
   Parametro.buscarAtual().then(function(resposta){
     $scope.parametro = resposta;
@@ -140,7 +151,7 @@ angular.module('starter.controllers', [])
       $ionicPopup.alert({title: 'Erro', template: 'Por favor, preencha todos os campos corretamente.'});
       return;
     }
-
+    $scope.parametro.administrador = localStorageService.get("usuarioLogado");
     Parametro.salvar($scope.parametro).then(function() {
       $ionicPopup.alert({title: 'Sucesso', template: 'Parâmetros atualizados com êxito.'});
     }, function() {
