@@ -18,6 +18,10 @@ angular.module('starter.ticketService', [])
 
     validarSaida: function(ticketId){
       return Restangular.one(endpoint + 'validarSaida', ticketId).get();
+    },
+
+    enviarEmail: function(comprovante){
+      return Restangular.all(endpoint + 'enviarComprovante').post(comprovante);
     }
   };
 });

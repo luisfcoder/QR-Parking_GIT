@@ -12,7 +12,6 @@ angular.module('starter.controllers', [])
         $ionicPopup.alert({title: 'Erro', template: error});
       });
     } catch (e) {
-      $ionicPopup.alert({title: 'Erro', template: e});
       $scope.exibeNavegador = true;
     }
   };
@@ -76,7 +75,7 @@ angular.module('starter.controllers', [])
   }
 
   $scope.sair = function(){
-      localStorageService.remove("usuarioLogado");
+    localStorageService.remove("usuarioLogado");
   }
 })
 
@@ -218,8 +217,9 @@ angular.module('starter.controllers', [])
   }
 
   function processarPagamento(){
-    Ticket.processarPagamento($scope.dadosPagamento).then(function() {
+    Ticket.processarPagamento($scope.dadosPagamento).then(function(retorno) {
       $scope.pago = true;
+      $scope.comprovante.idPagamento = retorno.id;
       respostaEnvioEmail();
     }, function(resposta) {
       $ionicPopup.alert({title: 'Erro', template: resposta.data.message});
@@ -241,7 +241,11 @@ angular.module('starter.controllers', [])
             if (!$scope.comprovante.email) {
               e.preventDefault();
             } else {
-              //Email.enviarEmail(titulo, assunto);
+              Ticket.enviarEmail($scope.comprovante).then(function(){
+                $ionicPopup.alert({title: 'Obrigado', template: "Email enviado com sucesso"});
+              }, function(erro){
+                $ionicPopup.alert({title: 'Erro', template: "Ocorreu um erro ao enviar o comprovante"});
+              });
               return;
             }
           }
