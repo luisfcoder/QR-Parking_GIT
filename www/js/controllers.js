@@ -112,23 +112,27 @@ angular.module('starter.controllers', [])
 
 .controller('AdministradorDetailCtrl', function($scope, $ionicPopup, $stateParams, Administradores, $state, Autenticacao) {
   Autenticacao.verificar();
+  $scope.administrador = {};
   $scope.administradorForm = {};
+  $scope.administradorFormConf = {}
   if($stateParams.administradorId != ""){
     Administradores.buscarPorId($stateParams.administradorId).then(function(resposta){
       $scope.administrador = resposta;
       $scope.administradorForm = angular.copy($scope.administrador);
-      $scope.administradorFormConf = angular.copy($scope.administrador);
+      $scope.administradorFormConf = angular.copy($scope.administradorForm);
     });
   }
 
   $scope.salvarAdministrador = function(){
     //REGRA CRIADA PARA NAO DEIXAR O FORMULÁRIO SER SUBMETIDO SE HOUVER ALGUM CAMPO VAZIO OU COM ERRO.
     //NÃO VALIDA OS FORMS DE CONFIRMAÇÃO
-    if($scope.administradorForm.nome == undefined || $scope.administradorForm.cpf == undefined || $scope.administradorForm.email == undefined || $scope.administradorForm.senha == undefined || $scope.administradorForm.confirmacaoEmail == undefined || $scope.administradorForm.confirmacaoSenha == undefined){
+    if($scope.administradorForm.id == undefined && ($scope.administradorForm.nome == undefined || $scope.administradorForm.cpf == undefined || $scope.administradorForm.email == undefined || $scope.administradorFormConf.email == undefined || $scope.administradorFormConf.novaSenha == undefined  || $scope.administradorFormConf.confirmacaoSenha == undefined)){
 
       $ionicPopup.alert({title: 'Erro', template: 'Por favor, preencha todos os campos corretamente.'});
 
     }else{
+      $scope.administradorForm.senha = $scope.administradorFormConf.confirmacaoSenha;
+
       Administradores.salvar($scope.administradorForm).then(function() {
         $ionicPopup.alert({title: 'Sucesso', template: 'Dados salvos com êxito.'});
         $state.go('tab.administradores');
@@ -268,7 +272,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('CadastrarCartaoCtrl', function($scope, $state, localStorageService, $stateParams) {
-  //limpa todos os cartões, usar somente me desenvolvimento
+  //limpa todos os cartões, usar somente em desenvolvimento
   //localStorageService.clearAll();
 
   $scope.card = {};
