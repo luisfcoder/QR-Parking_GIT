@@ -260,7 +260,8 @@ angular.module('starter.controllers', [])
   }
 
   function buscarCartoes(){
-    var cartoes = localStorageService.keys();
+    var memoria = localStorageService.keys();
+    var cartoes = removeUsuarioLogado(memoria);
     var template = '';
     for (var i = 0; i < cartoes.length; i++){
       var cartao = localStorageService.get(cartoes[i]);
@@ -269,6 +270,14 @@ angular.module('starter.controllers', [])
       template = template + '<ion-radio ng-model="dadosPagamento.cartao" ng-value="'+i+'">'+bandeira + " Final " + numberoAbreviado +'</ion-radio>'
     }
     return template;
+  }
+
+  function removeUsuarioLogado(cartoes){
+    var removeInvalido = cartoes.indexOf("usuarioLogado");
+    if (removeInvalido > -1) {
+        cartoes.splice(removeInvalido, 1);
+    }
+    return cartoes;
   }
 })
 
