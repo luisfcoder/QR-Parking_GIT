@@ -114,12 +114,14 @@ angular.module('starter.controllers', [])
   Autenticacao.verificar();
   $scope.administrador = {};
   $scope.administradorForm = {};
-  $scope.administradorFormConf = {}
+  $scope.administradorFormConf = {};
+
   if($stateParams.administradorId != ""){
     Administradores.buscarPorId($stateParams.administradorId).then(function(resposta){
       $scope.administrador = resposta;
       $scope.administradorForm = angular.copy($scope.administrador);
       $scope.administradorFormConf = angular.copy($scope.administradorForm);
+      $scope.definirTitulo(resposta);
     });
   }
 
@@ -139,7 +141,6 @@ angular.module('starter.controllers', [])
       }, function(resposta) {
         $ionicPopup.alert({title: 'Erro', template: resposta.data.message});
       });
-
     }
   }
 })
