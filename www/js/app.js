@@ -32,7 +32,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'diretiva.maximo', 's
 })
 
 .config(function($stateProvider, $urlRouterProvider, RestangularProvider, localStorageServiceProvider, ionicDatePickerProvider) {
-  RestangularProvider.setBaseUrl('http://192.168.0.4:8080/');
+  RestangularProvider.setBaseUrl('http://192.168.43.164:8080/');
   localStorageServiceProvider.setPrefix('qrParking');
   var datePickerObj = {
     inputDate: new Date(),
